@@ -26,3 +26,8 @@ Also a recipes app has been added which would display the video links, steps of 
 Updates - The page for displaying the recipes upon filling the ingredients by the user in the find_recipe form, has been created. This page shows the image and name of the recipe along with some other stats like Category, health score, time taken to prepare the recipe and the number of people who liked this recipe. 
 
 *******************************************************************************
+(20th March - 8:51pm)
+Updates - The profile page of the user has been made in the application, displaying his/her personal information like name, email, profile picture and an update button for updating any changes if made to the profile.
+Also some changes to the UI has been made like navbar has been included in the find_recipe page etc.
+
+********************************************************************************
