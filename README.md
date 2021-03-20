@@ -19,6 +19,7 @@ Updates - User authentication system added to the application such as register a
 *******************************************************************************
 (20th March - 5:07pm)
 Updates - A form created for filling the ingredients as specified by the user. Some filtering options have also been added to the form for user to make preferences as per his/her choice like veg/non-veg food and the hunger level of the user. This form has been created in find_recipe.html file of the project.
+Also a recipes app has been added which would display the video links, steps of preparation of the recipe and other details of the recipe which would come as result of the ingredients inputted by the user.
 
 *******************************************************************************
 (20th March - 5:45pm)
