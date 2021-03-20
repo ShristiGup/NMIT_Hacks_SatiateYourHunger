@@ -18,7 +18,12 @@
     href="https://cdn.jotfor.ms/themes/CSS/54ab0a7825d790e9458b4567.css?themeRevisionID=5cf3a046dd9c5670432d9dc1" />
   <link type="text/css" rel="stylesheet"
     href="https://cdn.jotfor.ms/css/styles/payment/payment_feature.css?3.3.23982" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Redressed&display=swap" rel="stylesheet">
   <style type="text/css">
+  
     @import url('https://shots.jotform.com/elton/genericTheme.css');
 
     .form-label-left {
@@ -224,7 +229,7 @@
     </button>
   </div>
   {% endfor %}
-  <form class="jotform-form" method="post" enctype="multipart/form-data">
+  <form class="jotform-form" method="post" action="../show-recipes/" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="hidden" name="formID" value="203233580605448">
     <input type="hidden" id="JWTContainer" value="">
@@ -234,10 +239,11 @@
         <li id="cid_20" class="form-input-wide" data-type="control_head">
           <div class="form-header-group  header-default">
             <div class="header-text httac htvam">
-              <h2 id="header_20" class="form-header" data-component="header">
-                Find_Your_Recipe
-              </h2>
-              <div id="subHeader_20" class="form-subHeader">
+              <h1 id="header_20" class="form-header" data-component="header" style="font-family: 'Redressed', cursive; font-size: 60px;">
+                Find Your Recipe
+              </h1>
+              <br>
+              <div id="subHeader_20" class="form-subHeader" style=" font-family: 'Dancing Script', cursive; font-size: 25px;">
                 Fill this form to enter the enticing world of mouth-watering recipes...
               </div>
             </div>
@@ -245,8 +251,10 @@
         </li>
         <div style="background-color:rgba(51, 14, 8, 0.87);">
         <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
-          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19">
-            Your Name
+          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
+          style="padding-bottom: 10px;
+          padding-top: 20px; font-size: 20px;">
+            Your Name -
             <span class="form-required">
               *
             </span>
@@ -254,13 +262,15 @@
           <div id="cid_19" class="form-input-wide jf-required">
             <input type="text" id="input_19" name="name" data-type="input-textbox"
               class="form-textbox validate[required] form-validation-error" size="20" placeholder=" "
-              data-component="textbox" aria-labelledby="label_19" required="" value="{{ user.username }}" readonly>
+              data-component="textbox" aria-labelledby="label_19" required="" value="{{ user.username }}" readonly style="font-size: 17px;">
           </div>
         </li>
 
         <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
-          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19">
-            List of Available Ingredients
+          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
+          style="padding-bottom: 10px;
+          padding-top: 20px; font-size: 20px;">
+            List of Available Ingredients -
             <span class="form-required">
               *
             </span>
@@ -275,8 +285,10 @@
           </div>
         </li>
         <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
-          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19">
-            Your Preference
+          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
+          style="padding-bottom: 10px;
+          padding-top: 20px; font-size: large;">
+            Your Preference -
             <span class="form-required">
               *
             </span>
@@ -286,15 +298,16 @@
               <input type="radio" id="veg" name="food_cat" value="Veg" required="">
               <label for="veg" class="options" style="color: white;">Veg</label><br>
             </div>
-            <div class="col">
+            <div class="col" style="padding-top: 4px;">
               <input type="radio" id="non-veg" name="food_cat" value="Non-Veg" required="">
               <label for="non-veg" class="options" style="color: white;">Non-Veg</label><br>
             </div>
           </div>
         </li>
         <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
-          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19" style="text-decoration: underline;">
-            Your Hunger Level
+          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19" style="padding-bottom: 10px;
+    padding-top: 20px; font-size: large;">
+            Your Hunger Level -
             <span class="form-required">
               *
             </span>
@@ -304,11 +317,11 @@
               <input type="radio" id="starving" name="prep_time" value="Starving" required="">
               <label for="starving" class="options" style="color: white;">Starving (Want Food Instantly)</label><br>
             </div>
-            <div class="col">
+            <div class="col" style="padding-top: 4px;">
               <input type="radio" id="pretty_hungry" name="prep_time" value="Pretty hungry" required="">
               <label for="pretty_hungry" class="options" style="color: white;">Pretty hungry (Stomach is Growling A Little)</label><br>
             </div>
-            <div class="col">
+            <div class="col" style="padding-top: 4px;">
               <input type="radio" id="satisfied" name="prep_time" value="Satisfied" required="">
               <label for="satisfied" class="options" style="color: white;">Satisfied (Neither Hungry Nor Full)</label><br>
             </div>
@@ -320,7 +333,7 @@
             <div style="text-align:center" data-align="center"
               class="form-buttons-wrapper form-buttons-center jsTest-button-wrapperField">
               <button id="input_14" type="submit" class="form-submit-button submit-button" data-component="button"
-                data-content="" style="background-color: #cc0101;;">
+                data-content="" style="background-color: #8a0d0d; font-size: 18px;">
                 Submit
               </button>
             </div>
