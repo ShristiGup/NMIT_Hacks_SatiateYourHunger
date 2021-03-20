@@ -36,3 +36,7 @@ Updates (One Add-On Done) - The redirection of user to the www.zomato.com page h
 Also half of the functionality has been implemented in the recipe_detail page of the application like image of recipe, it's nutrition information and other basic details of the recipe.
 
 *******************************************************************************
+(20th March - 11:50pm)
+Update (Another Add-On Done) - The user profile page has been updated with the latest 5 searches of the recipes made by the user as per his/her preferences of ingredients, veg/non-veg food and hunger level. Accordingly the models have been made, saved in the database and shown in the admin page of django project application.
+
+*******************************************************************************
