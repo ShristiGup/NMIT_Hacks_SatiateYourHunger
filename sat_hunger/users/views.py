@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from .forms import UserRegisterForm,UserUpdateForm,ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from recipes.models import *
 
 # Create your views here.
 def register(request):
@@ -55,6 +56,12 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-        context = { 'u_form':u_form,
-                    'p_form':p_form}
+        recent_searches = RecentSearches.objects.filter(user=request.user).order_by('-id')[:5]
+        if recent_searches:
+            context = { 'u_form':u_form,
+                        'p_form':p_form,
+                        'recent_searches':recent_searches}
+        else:
+            context = { 'u_form':u_form,
+                        'p_form':p_form,}
     return render(request,'users/profile.html',context)

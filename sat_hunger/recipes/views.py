@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from .models import *
 import requests
 import json
 
@@ -17,10 +18,12 @@ def show_recipe(request):
     ingre = request.POST.get('ingredients')
     globals()['food_cat'] = request.POST.get('food_cat')
     prep_time = request.POST.get('prep_time')
+
     if prep_time == "Starving":
         return redirect("https://www.zomato.com/ncr")
+    
     try:
-        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=0c360133fcc5485aa89304473473a0bd"
+        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=2cc006be89984859860a7eff445a9132"
         response = requests.get(url1)
         data = json.loads(response.content.decode('utf-8'))
         
@@ -29,7 +32,7 @@ def show_recipe(request):
             recipe_ids.append(i['id'])
         
         recipe_info_list = []
-        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=0c360133fcc5485aa89304473473a0bd"
+        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=2cc006be89984859860a7eff445a9132"
         url2 = url2.replace(" ","")
         resp = requests.get(url2)
         recipe_info_list = json.loads(resp.content.decode('utf-8'))
@@ -60,6 +63,8 @@ def show_recipe(request):
 
         if len(data)!=0 and len(list1)!=0 and len(list2)!=0:
             context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
+            r_obj = RecentSearches(user=request.user,ingredients=str(ingre),food_cat=food_cat,hunger_level=prep_time)
+            r_obj.save()
             return render(request,'recipes/show_recipes.html',context)
         else:
             return render(request,'recipes/show_recipes.html')

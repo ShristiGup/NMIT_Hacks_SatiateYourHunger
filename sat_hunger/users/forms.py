@@ -13,7 +13,7 @@ class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['username','email']
 
 class ProfileUpdateForm(forms.ModelForm):
