@@ -31,3 +31,8 @@ Updates - The profile page of the user has been made in the application, display
 Also some changes to the UI has been made like navbar has been included in the find_recipe page etc.
 
 ********************************************************************************
+(20th March - 10:20pm)
+Updates (One Add-On Done) - The redirection of user to the www.zomato.com page has been added if the user selects starving radiobutton in the form of find_recipe page of application otherwise the app gives the recipe and it's instructions as a result.
+Also half of the functionality has been implemented in the recipe_detail page of the application like image of recipe, it's nutrition information and other basic details of the recipe.
+
+*******************************************************************************
