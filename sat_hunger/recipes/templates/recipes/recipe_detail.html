@@ -1,0 +1,103 @@
+{% extends 'main_app/index.html' %}
+{% load static %}
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+{% block content %}
+<h3 class="mt-4 text-center">{{ recipe_item.title }}</h3>
+<div class="container mt-4">
+  <form class="row">
+    <div class="col-md-6">
+      <div class="card" style="width: 35rem;">
+        <div class="form-group">
+          <fieldset class="border p-2 mx-4 my-2">
+            <legend class="w-auto">
+              <h5>Basic Recipe Info:</h5>
+            </legend>
+            <div class="form-row text-center">
+              <div class="col-md-6 font-weight-bold">
+                <p>Category:</p>
+              </div>
+              <div class="col-md-6">
+                <button class="btn btn-sm btn-{{ btn_color }} font-weight-bold ">{{ food_cat }}</button>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Health Score:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ recipe_item.healthScore }}</p>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Ready in Minutes:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ recipe_item.readyInMinutes }}</p>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Liked By People:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ recipe_item.aggregateLikes }}</p>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="form-group">
+          <fieldset class="border p-2 mx-4 my-2">
+            <legend class="w-auto">
+              <h5>Recipe Stats:</h5>
+            </legend>
+            <div class="form-row text-center">
+              <div class="col-md-6 font-weight-bold">
+                <p>Calories:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ cal }} {{ unit_c }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Protein:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ protein }} {{ unit_p }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Carbohydrates:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ carbs }} {{ unit_ca }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Fats:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ fats }} {{ unit_f }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Cholestrol:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ cholestrol }} {{ unit_ch }}</a>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" style="text-align: center;">
+      <h5> Food Image: </h5>
+      <img src="{{ recipe_item.image }}" alt="recipe_pic" style="width: 90%;">
+      <p>Used Ingredients:
+      </p>
+    </div>
+    <div class="col-md-6" style="text-align: center;">
+      <h4>Instructions:</h4>
+      <img src="{{ recipe_item.image }}" alt="recipe_pic" style="width: 90%;">
+    </div>
+    <div class="col-md-6" style="text-align: center;">
+      <h5> Video Links: </h5>
+      <img src="{{ recipe_item.image }}" alt="recipe_pic" style="width: 90%;">
+    </div>
+  </form>
+</div>
+{% endblock content %}

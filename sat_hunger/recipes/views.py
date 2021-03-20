@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import requests
 import json
 
@@ -12,53 +12,104 @@ btn_color = ""
 
 def show_recipe(request):
     globals()['list3'] = []
+    globals()['food_cat'] = ""
+    globals()['btn_color'] = ""
     ingre = request.POST.get('ingredients')
     globals()['food_cat'] = request.POST.get('food_cat')
     prep_time = request.POST.get('prep_time')
-    # cooking_time = 0
+    if prep_time == "Starving":
+        return redirect("https://www.zomato.com/ncr")
+    try:
+        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=0c360133fcc5485aa89304473473a0bd"
+        response = requests.get(url1)
+        data = json.loads(response.content.decode('utf-8'))
+        
+        recipe_ids = []
+        for i in data:
+            recipe_ids.append(i['id'])
+        
+        recipe_info_list = []
+        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=0c360133fcc5485aa89304473473a0bd"
+        url2 = url2.replace(" ","")
+        resp = requests.get(url2)
+        recipe_info_list = json.loads(resp.content.decode('utf-8'))
+        
+        list1=[]
+        list2=[]
+        
+        for i in recipe_info_list:
+            if food_cat=="Veg" and str(i['vegetarian']) == "True":
+                list1.append(i)
+                globals()['btn_color'] = "success"
+            elif food_cat=="Non-Veg" and str(i['vegetarian']) == "False":
+                list1.append(i)
+                globals()['btn_color'] = "danger"
+        
 
-    url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=0c360133fcc5485aa89304473473a0bd"
-    response = requests.get(url1)
-    data = json.loads(response.content.decode('utf-8'))
-    
-    recipe_ids = []
-    for i in data:
-        recipe_ids.append(i['id'])
-    
-    recipe_info_list = []
-    url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=0c360133fcc5485aa89304473473a0bd"
-    url2 = url2.replace(" ","")
-    resp = requests.get(url2)
-    recipe_info_list = json.loads(resp.content.decode('utf-8'))
-    
-    list1=[]
-    list2=[]
-    
-    for i in recipe_info_list:
-        if food_cat=="Veg" and str(i['vegetarian']) == "True":
-            list1.append(i)
-            globals()['btn_color'] = "success"
-        elif food_cat=="Non-Veg" and str(i['vegetarian']) == "False":
-            list1.append(i)
-            globals()['btn_color'] = "danger"
-    
+        for i in list1:
+            if prep_time=="Pretty hungry" and int(i['readyInMinutes'])<=25:
+                list2.append(i)
+            elif prep_time=="Satisfied":
+                list2.append(i)
 
-    for i in list1:
-        if prep_time=="Starving" and int(i['readyInMinutes'])<=15:
-            list2.append(i)
-        elif prep_time=="Pretty hungry" and int(i['readyInMinutes'])<=25:
-            list2.append(i)
-        elif prep_time=="Satisfied":
-            list2.append(i)
+        for i in list2:
+            for j in data:
+                if i['id'] == j['id']:
+                    i.update(j)
+                    globals()['list3'].append(i)
 
-    for i in list2:
-        for j in data:
-            if i['id'] == j['id']:
-                i.update(j)
-                globals()['list3'].append(i)
-
-    if len(data)!=0 and len(list1)!=0 and len(list2)!=0:
-        context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
-        return render(request,'recipes/show_recipes.html',context)
-    else:
+        if len(data)!=0 and len(list1)!=0 and len(list2)!=0:
+            context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
+            return render(request,'recipes/show_recipes.html',context)
+        else:
+            return render(request,'recipes/show_recipes.html')
+    except:
         return render(request,'recipes/show_recipes.html')
+
+def recipe_detail(request,id):
+    recipe_item = ""
+    cal = 0
+    protein = 0
+    carbs = 0
+    fats = 0
+    cholestrol = 0
+    unit_c = ""
+    unit_f = ""
+    unit_p = ""
+    unit_ch = ""
+    unit_ca = ""
+    for i in list3:
+        if i['id'] == id:
+            recipe_item = i
+    nutrition = recipe_item['nutrition']['nutrients']
+    for i in nutrition:
+        if i['name']=="Calories":
+            cal = round(int(i['amount']))
+            unit_c = i['unit']
+        elif i['name']=="Fat":
+            fats = round(int(i['amount']))
+            unit_f = i['unit']
+        elif i['name']=="Carbohydrates":
+            carbs = round(int(i['amount']))
+            unit_ca = i['unit']
+        elif i['name']=="Protein":
+            protein = round(int(i['amount']))
+            unit_p = i['unit']
+        elif i['name']=="Cholesterol":
+            cholestrol = round(int(i['amount']))
+            unit_ch = i['unit']
+    # missed_ingre_count = int(recipe_item['missedIngredientCount'])
+    # used_ingre_count = int(recipe_item['usedIngredientCount'])
+    missed_ingre = recipe_item['missedIngredients']
+    used_ingre = recipe_item['usedIngredients']
+    unused_ingre = recipe_item['unusedIngredients']
+    # m_ing = 
+    # for i in missed_ingre:
+
+
+    # url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions&apiKey=9c71df05d86640df9865c5eb71775086"
+    # response = requests.get(url3)
+    # d = json.loads(response.content.decode('utf-8'))
+
+    context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca}
+    return render(request,'recipes/recipe_detail.html',context)

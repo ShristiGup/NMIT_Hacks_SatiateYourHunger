@@ -10,7 +10,7 @@
 <div class="container mt-4" style="max-width: 70%;">
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for i in recipe_items %}
-    <div class="col mb-4" style="cursor: pointer;">
+    <div class="col mb-4" style="cursor: pointer;" onclick="location.href=`{% url 'recipe_detail' i.id %}`">
       <div class="card h-100 zoom text-center abc click special-card">
         <img src="{{ i.image }}" class="card-img-top" alt="recipe_pic">
         <div class="card-body">
