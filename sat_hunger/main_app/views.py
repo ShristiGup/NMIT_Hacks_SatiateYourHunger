@@ -5,3 +5,6 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='login')
 def home(request):
     return render(request,'main_app/index.html')
+
+def sati(request):
+    return render(request, 'main_app/sati.html')
