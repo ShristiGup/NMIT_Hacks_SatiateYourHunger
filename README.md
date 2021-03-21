@@ -48,3 +48,11 @@ Update - UI has been updated and another html page named sati.html has been made
 Update - Instructions for cooking a recipe added on recipe_detail.html file of the application, after fetching from the spoonacular.com api.
 
 *******************************************************************************
+(21st March - 11:48am)
+Updates - Video links added on the recipe_detail page of the application, along with appropriate messages if no video link is shown up.
+
+*******************************************************************************
+(21st March - 1:50am)
+Updates - index.html page modified, along with some food jokes and trivia fetched from food trivia api.
+
+*******************************************************************************
