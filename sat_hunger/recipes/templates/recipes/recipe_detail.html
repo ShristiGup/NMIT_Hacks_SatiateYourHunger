@@ -88,6 +88,33 @@
       <h5> Food Image: </h5>
       <img src="{{ recipe_item.image }}" alt="recipe_pic" style="width: 90%;">
     </div>
+    <div class="col-md-6 my-4" style="text-align: center;">
+      <div class="card mb-2 p-4" style="width: 35rem;">
+        <h4> Instructions: </h4>
+        {% for i in steps %}
+        <div class="form-row mt-4">
+          <!-- <div class="col-md-6 font-weight-bold"> -->
+          <!-- <p>Equipment:</p>
+        </div>
+        <div class="col-md-6">
+          <p>{{ j.equipment.name }}</p>
+        </div>
+        <div class="col-md-6 font-weight-bold">
+          <p>Ingredients:</p>
+        </div>
+        <div class="col-md-6">
+          <p>{{ j.ingredients.name }}</p>
+        </div> -->
+          <div class="col-md-2 font-weight-bold">
+            <p>Step: {{ forloop.counter }}</p>
+          </div>
+          <div class="col-md-10">
+            <p>{{ i.step }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
   </form>
 </div>
 {% endblock content %}

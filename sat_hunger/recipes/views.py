@@ -112,9 +112,18 @@ def recipe_detail(request,id):
     # for i in missed_ingre:
 
 
-    # url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions&apiKey=9c71df05d86640df9865c5eb71775086"
-    # response = requests.get(url3)
-    # d = json.loads(response.content.decode('utf-8'))
+    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=2cc006be89984859860a7eff445a9132"
+    response = requests.get(url3)
+    d = json.loads(response.content.decode('utf-8'))
+    method1 = d[0]
+    steps = method1['steps']
 
-    context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca}
+    url4 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=2cc006be89984859860a7eff445a9132"
+    response = requests.get(url4)
+    video = json.loads(response.content.decode('utf-8'))
+    method1 = d[0]
+    steps = method1['steps']
+
+
+    context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
     return render(request,'recipes/recipe_detail.html',context)
