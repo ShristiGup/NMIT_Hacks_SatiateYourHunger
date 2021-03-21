@@ -23,7 +23,7 @@ def show_recipe(request):
         return redirect("https://www.zomato.com/ncr")
     
     try:
-        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=2cc006be89984859860a7eff445a9132"
+        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=4f9d19635edc4e71b4360bf87b47ece0"
         response = requests.get(url1)
         data = json.loads(response.content.decode('utf-8'))
         
@@ -32,7 +32,7 @@ def show_recipe(request):
             recipe_ids.append(i['id'])
         
         recipe_info_list = []
-        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=2cc006be89984859860a7eff445a9132"
+        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=4f9d19635edc4e71b4360bf87b47ece0"
         url2 = url2.replace(" ","")
         resp = requests.get(url2)
         recipe_info_list = json.loads(resp.content.decode('utf-8'))
@@ -112,17 +112,17 @@ def recipe_detail(request,id):
     # for i in missed_ingre:
 
 
-    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=2cc006be89984859860a7eff445a9132"
+    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=4f9d19635edc4e71b4360bf87b47ece0"
     response = requests.get(url3)
     d = json.loads(response.content.decode('utf-8'))
     method1 = d[0]
     steps = method1['steps']
 
-    url4 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=2cc006be89984859860a7eff445a9132"
-    response = requests.get(url4)
-    video = json.loads(response.content.decode('utf-8'))
-    method1 = d[0]
-    steps = method1['steps']
+    # url4 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=4f9d19635edc4e71b4360bf87b47ece0"
+    # response = requests.get(url4)
+    # video = json.loads(response.content.decode('utf-8'))
+    # method1 = d[0]
+    # steps = method1['steps']
 
 
     context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}

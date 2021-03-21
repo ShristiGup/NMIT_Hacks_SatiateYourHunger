@@ -13,6 +13,28 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
   <title>SatiateYourHunger</title>
   {% block style %}
+  <style>
+    #sat {
+      background-image: url("{% static 'imgs/p3.jpg' %}");
+      background-position: center;
+      background-size: cover;
+      margin-top: 60px;
+      height: 500px;
+      line-height: 100%;
+    }
+
+    body {
+      background-color: rgb(255, 254, 193);
+    }
+
+    .container {
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  </style>
   {% endblock style %}
 </head>
 
@@ -53,6 +75,90 @@
     {% endif %}
   </div>
   {% block content %}
+
+  <div class="jumbotron container" id="sat">
+    <h1 class="display-4"
+      style="font-family: 'Berkshire Swash', cursive; color: white; text-align: center; font-size: 40px;">Cooking is at
+      once child’s play and adult joy. And cooking done with care is an act of love. </h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3 style="font-family: 'Berkshire Swash', cursive; color: white; text-align: center; font-size: 40px;">— Craig
+      Claiborne</h3>
+    <br>
+  </div>
+  <div class="row container">
+    <div class="col-lg-4">
+      <img class="rounded-circle" src="{% static 'imgs/p1.jpg' %}" alt="Generic placeholder image" width="300"
+        height="300">
+      <h2 style="margin-top: 30px; text-align: center;">Find Recipe</h2>
+      <p style="    font-size: 18px; text-align: center;">Always start out with a larger pot than what you think you
+        need. — Julia Child</p>
+
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="{% url 'find_recipe' %}" role="button"
+          style="margin: 0 auto; display: block;">View details »</a></p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="rounded-circle" src="{% static 'imgs/p5.jpg' %}" alt="Generic placeholder image" width="300"
+        height="300">
+      <h2 style="margin-top: 30px; text-align: center;">Explore Recipe</h2>
+      <p style="    font-size: 18px; text-align: center;"> Cooking is about creating something delicious for someone
+        else. — Ayumi </p>
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
+          style="margin: 0 auto; display: block;">View details »</a></p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="rounded-circle" src="{% static 'imgs/p2.jpg' %}" alt="Generic placeholder image" width="300"
+        height="300">
+      <h2 style="margin-top: 30px; text-align: center;">Get Food Facts!</h2>
+      <p style="    font-size: 18px; text-align: center;">I cook with wine; sometimes I even add it to the food. — W.C.
+        Fields</p>
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
+          style="margin: 0 auto; display: block;">View details »</a></p>
+    </div><!-- /.col-lg-4 -->
+  </div>
+  <div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <div class="row">
+        <div class="col-12 col-md">
+          <img class="mb-2" src="{% static 'imgs/p3.jpg' %}" alt="" width="24" height="24">
+          <small class="d-block mb-3 text-muted">© 2017-2018</small>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Features</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+            <li><a class="text-muted" href="#">Team feature</a></li>
+            <li><a class="text-muted" href="#">Stuff for developers</a></li>
+            <li><a class="text-muted" href="#">Another one</a></li>
+            <li><a class="text-muted" href="#">Last time</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Resources</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Resource</a></li>
+            <li><a class="text-muted" href="#">Resource name</a></li>
+            <li><a class="text-muted" href="#">Another resource</a></li>
+            <li><a class="text-muted" href="#">Final resource</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>About</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Team</a></li>
+            <li><a class="text-muted" href="#">Locations</a></li>
+            <li><a class="text-muted" href="#">Privacy</a></li>
+            <li><a class="text-muted" href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
   {% endblock content %}
 
   <!-- Optional JavaScript; choose one of the two! -->
