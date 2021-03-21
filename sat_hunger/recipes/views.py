@@ -10,12 +10,12 @@ def recipe(request):
 list3 = []
 food_cat = ""
 btn_color = ""
-
+ingre = ""
 def show_recipe(request):
     globals()['list3'] = []
     globals()['food_cat'] = ""
     globals()['btn_color'] = ""
-    ingre = request.POST.get('ingredients')
+    globals()['ingre'] = request.POST.get('ingredients')
     globals()['food_cat'] = request.POST.get('food_cat')
     prep_time = request.POST.get('prep_time')
 
@@ -117,13 +117,17 @@ def recipe_detail(request,id):
     d = json.loads(response.content.decode('utf-8'))
     method1 = d[0]
     steps = method1['steps']
+    
+    url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey=4f9d19635edc4e71b4360bf87b47ece0"
+    response = requests.get(url4)
+    videos = json.loads(response.content.decode('utf-8'))
+    try:
+        vd = videos['videos']
+        if len(vd)!=0:
+            context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps,'vd':vd}
+        else:
+            context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
+    except:
+        context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
 
-    # url4 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=4f9d19635edc4e71b4360bf87b47ece0"
-    # response = requests.get(url4)
-    # video = json.loads(response.content.decode('utf-8'))
-    # method1 = d[0]
-    # steps = method1['steps']
-
-
-    context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
     return render(request,'recipes/recipe_detail.html',context)
