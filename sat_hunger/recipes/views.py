@@ -23,7 +23,7 @@ def show_recipe(request):
         return redirect("https://www.zomato.com/ncr")
     
     try:
-        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=4f9d19635edc4e71b4360bf87b47ece0"
+        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=9c71df05d86640df9865c5eb71775086"
         response = requests.get(url1)
         data = json.loads(response.content.decode('utf-8'))
         
@@ -32,7 +32,7 @@ def show_recipe(request):
             recipe_ids.append(i['id'])
         
         recipe_info_list = []
-        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=4f9d19635edc4e71b4360bf87b47ece0"
+        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=9c71df05d86640df9865c5eb71775086"
         url2 = url2.replace(" ","")
         resp = requests.get(url2)
         recipe_info_list = json.loads(resp.content.decode('utf-8'))
@@ -112,13 +112,13 @@ def recipe_detail(request,id):
     # for i in missed_ingre:
 
 
-    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=4f9d19635edc4e71b4360bf87b47ece0"
+    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=9c71df05d86640df9865c5eb71775086"
     response = requests.get(url3)
     d = json.loads(response.content.decode('utf-8'))
     method1 = d[0]
     steps = method1['steps']
     
-    url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey=4f9d19635edc4e71b4360bf87b47ece0"
+    url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey=9c71df05d86640df9865c5eb71775086"
     response = requests.get(url4)
     videos = json.loads(response.content.decode('utf-8'))
     try:
@@ -131,3 +131,18 @@ def recipe_detail(request,id):
         context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
 
     return render(request,'recipes/recipe_detail.html',context)
+
+def exp_recipe(request):
+    ex_rec = request.POST.get('recpe')
+    url = "https://api.spoonacular.com/recipes/complexSearch?query="+str(ex_rec)+"&number=1&apiKey=9c71df05d86640df9865c5eb71775086"
+    res = requests.get(url)
+    result = json.loads(resp.content.decode('utf-8'))
+
+    a = result['results']
+    b = a[0]
+
+    url = "https://api.spoonacular.com/recipes/"+str(b['id'])+"/ingredientWidget?apiKey=9c71df05d86640df9865c5eb71775086"
+    res1 = requests.get(url)
+    result1 = json.loads(resp.content.decode('utf-8'))
+
+    return render(request,'recipes/explore_recipe.html')

@@ -75,7 +75,7 @@
     {% endif %}
   </div>
   {% block content %}
-
+  
   <div class="jumbotron container" id="sat">
     <h1 class="display-4"
       style="font-family: 'Berkshire Swash', cursive; color: white; text-align: center; font-size: 40px;">Cooking is at
@@ -99,7 +99,7 @@
         need. — Julia Child</p>
 
       <p style="margin-top: 20px;"><a class="btn btn-secondary" href="{% url 'find_recipe' %}" role="button"
-          style="margin: 0 auto; display: block;">View details »</a></p>
+          style="margin: 0 auto; display: block;">Find Recipe Here</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
       <img class="rounded-circle" src="{% static 'imgs/p5.jpg' %}" alt="Generic placeholder image" width="300"
@@ -108,7 +108,7 @@
       <p style="    font-size: 18px; text-align: center;"> Cooking is about creating something delicious for someone
         else. — Ayumi </p>
       <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
-          style="margin: 0 auto; display: block;">View details »</a></p>
+          style="margin: 0 auto; display: block;">Explore Recipe Here</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
       <img class="rounded-circle" src="{% static 'imgs/p2.jpg' %}" alt="Generic placeholder image" width="300"
@@ -117,9 +117,27 @@
       <p style="    font-size: 18px; text-align: center;">I cook with wine; sometimes I even add it to the food. — W.C.
         Fields</p>
       <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
-          style="margin: 0 auto; display: block;">View details »</a></p>
+          style="margin: 0 auto; display: block;">Get Food Facts Here</a></p>
     </div><!-- /.col-lg-4 -->
   </div>
+  <div class="card m-2 bg-success">
+    <div class="form-row text-center p-4">
+      <div class="col-md-6">
+      <div class="card h-30">
+     
+        <h2>Food Joke Of The Day</h2>
+        <p>{{ food_joke.text }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+    <div class="card h-100">
+      
+        <h2>Useful Food Trivia</h2>
+        <p>{{ food_trivia.text }}</p>
+      </div>
+  </div>
+  </div>
+    </div>
   <div class="container">
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
       <div class="row">
