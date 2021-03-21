@@ -44,3 +44,7 @@ Update (Another Add-On Done) - The user profile page has been updated with the l
 Update - UI has been updated and another html page named sati.html has been made which would appear before register/login page of our application. It would be the first page to be displayed when the user opens up the application.
 
 *******************************************************************************
+(21st March - 10:00am)
+Update - Instructions for cooking a recipe added on recipe_detail.html file of the application, after fetching from the spoonacular.com api.
+
+*******************************************************************************
