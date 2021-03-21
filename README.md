@@ -40,3 +40,7 @@ Also half of the functionality has been implemented in the recipe_detail page of
 Update (Another Add-On Done) - The user profile page has been updated with the latest 5 searches of the recipes made by the user as per his/her preferences of ingredients, veg/non-veg food and hunger level. Accordingly the models have been made, saved in the database and shown in the admin page of django project application.
 
 *******************************************************************************
+(21st March - 7:30am)
+Update - UI has been updated and another html page named sati.html has been made which would appear before register/login page of our application. It would be the first page to be displayed when the user opens up the application.
+
+*******************************************************************************
