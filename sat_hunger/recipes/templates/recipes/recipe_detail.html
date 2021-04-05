@@ -1,0 +1,133 @@
+{% extends 'main_app/index.html' %}
+{% load static %}
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+{% block content %}
+<h3 class="mt-4 text-center">{{ recipe_item.title }}</h3>
+<div class="container mt-4">
+  <form class="row">
+    <div class="col-md-6">
+      <div class="card" style="width: 35rem;">
+        <div class="form-group">
+          <fieldset class="border p-2 mx-4 my-2">
+            <legend class="w-auto">
+              <h5>Basic Recipe Info:</h5>
+            </legend>
+            <div class="form-row text-center">
+              <div class="col-md-6 font-weight-bold">
+                <p>Category:</p>
+              </div>
+              <div class="col-md-6">
+                <button class="btn btn-sm btn-{{ btn_color }} font-weight-bold ">{{ food_cat }}</button>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Health Score:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ recipe_item.healthScore }}</p>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Ready in Minutes:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ recipe_item.readyInMinutes }}</p>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Liked By People:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ recipe_item.aggregateLikes }}</p>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="form-group">
+          <fieldset class="border p-2 mx-4 my-2">
+            <legend class="w-auto">
+              <h5>Recipe Stats:</h5>
+            </legend>
+            <div class="form-row text-center">
+              <div class="col-md-6 font-weight-bold">
+                <p>Calories:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ cal }} {{ unit_c }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Protein:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ protein }} {{ unit_p }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Carbohydrates:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ carbs }} {{ unit_ca }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Fats:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ fats }} {{ unit_f }}</a>
+              </div>
+              <div class="col-md-6 font-weight-bold">
+                <p>Cholestrol:</p>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-sm btn-dark" style="cursor: text;width: 4.5rem;">{{ cholestrol }} {{ unit_ch }}</a>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" style="text-align: center;">
+      <h5> Food Image: </h5>
+      <img src="{{ recipe_item.image }}" alt="recipe_pic" style="width: 90%;">
+    </div>
+    <div class="col-md-12 my-4" style="text-align: center;">
+      <div class="card mb-2 p-4">
+        <h4> Instructions: </h4>
+        {% for i in steps %}
+        <div class="form-row mt-4">
+          <!-- <div class="col-md-6 font-weight-bold"> -->
+          <!-- <p>Equipment:</p>
+        </div>
+        <div class="col-md-6">
+          <p>{{ j.equipment.name }}</p>
+        </div>
+        <div class="col-md-6 font-weight-bold">
+          <p>Ingredients:</p>
+        </div>
+        <div class="col-md-6">
+          <p>{{ j.ingredients.name }}</p>
+        </div> -->
+          <div class="col-md-2 font-weight-bold">
+            <p>Step: {{ forloop.counter }}</p>
+          </div>
+          <div class="col-md-10">
+            <p>{{ i.step }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-12 my-4" style="text-align: center;">
+      <div class="card mb-2 p-4">
+        <h4> Video Links: </h4>
+        {% if vd %}
+        {% for i in vd %}
+        <iframe width="420" height="315" src="https://www.youtube.com/embed/{{ i.youTubeId }}">
+        </iframe>
+        {% endfor %}
+        {% else %}
+        <h2 class="mt-4 text-center">No Videos to Display for this Recipe!</h2>
+        {% endif %}
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}

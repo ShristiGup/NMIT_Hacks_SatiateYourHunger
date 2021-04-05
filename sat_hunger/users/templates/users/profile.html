@@ -1,0 +1,57 @@
+{% extends "main_app/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container" style="max-width: 50%;">
+    <div class="card px-4 py-2 my-4">
+        <div class="media">
+        <img class="rounded-circle account-img" style="border: 3px solid black;" src="{{ user.profile.image.url }}" height="125" width="125">
+        <div class="media-body">
+            <h2 class="account-heading ml-3">{{ user.username }}</h2>
+            <p class="text-secondary ml-3">{{ user.email }}</p>
+        </div>
+        </div>
+        <!-- FORM HERE -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4 pt-2">Profile Info</legend>
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="form-group text-center">
+                <button class="btn btn-outline-success" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container mb-4" style="max-width: 70%;">
+<h2 class="text-center mb-4">Your Recent Searches</h2>
+    {% if not recent_searches %}
+    <div class="card mb-4">
+        <div class="card-body">
+        <h5 class="card-title text-center">You have no searches yet!</h5>
+        </div>
+    </div>
+    {% else %}
+    <table class="table table-bordered table-hover text-center">
+        <thead>
+          <tr class="bg-success text-white">
+            <th scope="col">S.No.</th>
+            <th scope="col">Ingredients</th>
+            <th scope="col">Preference</th>
+            <th scope="col">Hunger Level</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in recent_searches %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ i.ingredients }}</td>
+            <td>{{ i.food_cat }}</td>
+            <td>{{ i.hunger_level }}</td>   
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+      {% endif %}
+{% endblock content%}

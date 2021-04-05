@@ -1,0 +1,53 @@
+{% extends 'main_app/index.html' %}
+{% load static %}
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+{% block content %}
+{% if recipe_items %}
+<h2 class="mt-4 text-center">Matching Recipes as per your Preferences...</h2>
+<div class="container mt-4" style="max-width: 70%;">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for i in recipe_items %}
+    <div class="col mb-4" style="cursor: pointer;" onclick="location.href=`{% url 'recipe_detail' i.id %}`">
+      <div class="card h-100 zoom text-center abc click special-card">
+        <img src="{{ i.image }}" class="card-img-top" alt="recipe_pic">
+        <div class="card-body">
+          <h5 class="card-title">{{ i.title }}</h5>
+          <form class="row">
+            <div class="col-md-6">
+              <p>Category:</p>
+            </div>
+            <div class="col-md-6">
+              <a class="btn btn-sm btn-{{ btn_color }} font-weight-bold ">{{ food_cat }}</a>
+            </div>
+            <div class="col-md-6">
+              <p>Health Score:</p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text">{{ i.healthScore }}</p>
+            </div>
+            <div class="col-md-6">
+              <p>Ready in Minutes:</p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text">{{ i.readyInMinutes }}</p>
+            </div>
+            <div class="col-md-6">
+              <p>Liked By People:</p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text">{{ i.aggregateLikes }}</p>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+  <h2 class="mt-4 text-center">Oops...No Recipe to Display!!!(Please Change Your Preferences)</h2>
+{% endif %}
+{% endblock content %}

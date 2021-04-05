@@ -1,0 +1,201 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+  <title>SatiateYourHunger</title>
+  {% block style %}
+  <style>
+    #sat {
+      background-image: url("{% static 'imgs/p3.jpg' %}");
+      background-position: center;
+      background-size: cover;
+      margin-top: 60px;
+      height: 500px;
+      line-height: 100%;
+    }
+
+    body {
+      background-color: rgb(255, 254, 193);
+    }
+
+    .container {
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  </style>
+  {% endblock style %}
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-warning font-weight-bold">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">SatiateYourHunger</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'find_recipe' %}">Find Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+          </li>
+      </div>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container my-4" style="max-width: 55%;">
+    {% if messages %}
+    {% for msg in messages%}
+    <div class="alert alert-{{msg.tags}}">
+      {{msg}}
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  {% block content %}
+  
+  <div class="jumbotron container" id="sat">
+    <h1 class="display-4"
+      style="font-family: 'Berkshire Swash', cursive; color: white; text-align: center; font-size: 40px;">Cooking is at
+      once child’s play and adult joy. And cooking done with care is an act of love. </h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3 style="font-family: 'Berkshire Swash', cursive; color: white; text-align: center; font-size: 40px;">— Craig
+      Claiborne</h3>
+    <br>
+  </div>
+  <div class="row container">
+    <div class="col-lg-4">
+      <img class="rounded-circle" src="{% static 'imgs/p1.jpg' %}" alt="Generic placeholder image" width="300"
+        height="300">
+      <h2 style="margin-top: 30px; text-align: center;">Find Recipe</h2>
+      <p style="    font-size: 18px; text-align: center;">Always start out with a larger pot than what you think you
+        need. — Julia Child</p>
+
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="{% url 'find_recipe' %}" role="button"
+          style="margin: 0 auto; display: block;">Find Recipe Here</a></p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="rounded-circle" src="{% static 'imgs/p5.jpg' %}" alt="Generic placeholder image" width="300"
+        height="300">
+      <h2 style="margin-top: 30px; text-align: center;">Explore Recipe</h2>
+      <p style="    font-size: 18px; text-align: center;"> Cooking is about creating something delicious for someone
+        else. — Ayumi </p>
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
+          style="margin: 0 auto; display: block;">Explore Recipe Here</a></p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="rounded-circle" src="{% static 'imgs/p2.jpg' %}" alt="Generic placeholder image" width="300"
+        height="300">
+      <h2 style="margin-top: 30px; text-align: center;">Get Food Facts!</h2>
+      <p style="    font-size: 18px; text-align: center;">I cook with wine; sometimes I even add it to the food. — W.C.
+        Fields</p>
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
+          style="margin: 0 auto; display: block;">Get Food Facts Here</a></p>
+    </div><!-- /.col-lg-4 -->
+  </div>
+  <div class="card m-2 " >
+    <div class="form-row text-center p-4 bg-warning text-dark" >
+      <div class="col-md-6">
+      <div class="card h-30" style="background-color: #fffeb4;">
+     
+        <h2 style="    margin-top: 20px;">Food Joke Of The Day</h2>
+        <p>{{ food_joke.text }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+    <div class="card h-100" style="background-color: #fffeb4;">
+      
+        <h2 style="    margin-top: 20px;">Useful Food Trivia</h2>
+        <p>{{ food_trivia.text }}</p>
+      </div>
+  </div>
+  </div>
+    </div>
+  <div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <div class="row">
+        <div class="col-12 col-md">
+          <img class="mb-2" src="{% static 'imgs/p3.jpg' %}" alt="" width="24" height="24">
+          <small class="d-block mb-3 text-muted">© 2017-2018</small>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Features</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+            <li><a class="text-muted" href="#">Team feature</a></li>
+            <li><a class="text-muted" href="#">Stuff for developers</a></li>
+            <li><a class="text-muted" href="#">Another one</a></li>
+            <li><a class="text-muted" href="#">Last time</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Resources</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Resource</a></li>
+            <li><a class="text-muted" href="#">Resource name</a></li>
+            <li><a class="text-muted" href="#">Another resource</a></li>
+            <li><a class="text-muted" href="#">Final resource</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>About</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Team</a></li>
+            <li><a class="text-muted" href="#">Locations</a></li>
+            <li><a class="text-muted" href="#">Privacy</a></li>
+            <li><a class="text-muted" href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+  {% endblock content %}
+
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script> -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
