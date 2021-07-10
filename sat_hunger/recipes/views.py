@@ -143,6 +143,6 @@ def exp_recipe(request):
 
     url = "https://api.spoonacular.com/recipes/"+str(b['id'])+"/ingredientWidget?apiKey=9c71df05d86640df9865c5eb71775086"
     res1 = requests.get(url)
-    result1 = json.loads(resp.content.decode('utf-8'))
+    result1 = json.loads(res.content.decode('utf-8'))
 
     return render(request,'recipes/explore_recipe.html')
