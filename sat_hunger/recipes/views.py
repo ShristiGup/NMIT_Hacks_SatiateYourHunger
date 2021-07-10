@@ -136,7 +136,7 @@ def exp_recipe(request):
     ex_rec = request.POST.get('recpe')
     url = "https://api.spoonacular.com/recipes/complexSearch?query="+str(ex_rec)+"&number=1&apiKey=9c71df05d86640df9865c5eb71775086"
     res = requests.get(url)
-    result = json.loads(resp.content.decode('utf-8'))
+    result = json.loads(res.content.decode('utf-8'))
 
     a = result['results']
     b = a[0]
