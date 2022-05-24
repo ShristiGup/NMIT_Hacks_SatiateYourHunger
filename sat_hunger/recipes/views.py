@@ -4,6 +4,7 @@ import requests
 import json
 
 # Create your views here.
+
 def recipe(request):
     return render(request,'recipes/find_recipe.html')
 
@@ -11,6 +12,10 @@ list3 = []
 food_cat = ""
 btn_color = ""
 ingre = ""
+
+def addRecipe(request):
+    return render(request,'recipes/add_recipe.html')
+
 def show_recipe(request):
     globals()['list3'] = []
     globals()['food_cat'] = ""
@@ -26,7 +31,7 @@ def show_recipe(request):
         url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=9c71df05d86640df9865c5eb71775086"
         response = requests.get(url1)
         data = json.loads(response.content.decode('utf-8'))
-        
+        print(data)
         recipe_ids = []
         for i in data:
             recipe_ids.append(i['id'])
@@ -65,6 +70,7 @@ def show_recipe(request):
             context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
             r_obj = RecentSearches(user=request.user,ingredients=str(ingre),food_cat=food_cat,hunger_level=prep_time)
             r_obj.save()
+            # print(request.data)
             return render(request,'recipes/show_recipes.html',context)
         else:
             return render(request,'recipes/show_recipes.html')

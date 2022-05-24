@@ -15,7 +15,7 @@
   {% block style %}
   <style>
     #sat {
-      background-image: url("{% static 'imgs/p3.jpg' %}");
+      background-image: url("{% static 'imgs/coffee.jpg' %}");
       background-position: center;
       background-size: cover;
       margin-top: 60px;
@@ -53,6 +53,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'find_recipe' %}">Find Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_recipe' %}">Add Recipes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'profile' %}">Profile</a>
@@ -126,14 +129,14 @@
       <div class="card h-30" style="background-color: #fffeb4;">
      
         <h2 style="    margin-top: 20px;">Food Joke Of The Day</h2>
-        <p>{{ food_joke.text }}</p>
+        <p style="padding: 30px;">{{ food_joke.text }}</p>
       </div>
     </div>
     <div class="col-md-6">
     <div class="card h-100" style="background-color: #fffeb4;">
       
         <h2 style="    margin-top: 20px;">Useful Food Trivia</h2>
-        <p>{{ food_trivia.text }}</p>
+        <p style="padding: 30px;">{{ food_trivia.text }}</p>
       </div>
   </div>
   </div>

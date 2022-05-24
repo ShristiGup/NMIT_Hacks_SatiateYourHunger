@@ -46,7 +46,7 @@
 			width:60%;
 			background-color: rgb(235, 230, 156);
 			border:2px solid orangered;
-			border-radius: 20px !important;
+			border-radius: 0;
 			color: brown;
 			font-weight: bold;
 		}
@@ -182,7 +182,8 @@
 						<strong style="color:red;">{{ error|escape }}</strong>
 						{% endfor %}
 						{% endif %}
-						<div class="d-flex justify-content-center mt-3 login_container">
+
+						<div class="d-flex justify-content-center mt-3 login_container" style="border-radius: 0;">
 							<input class="btn login_btn" type="submit" value="Register">
 						</div>
 					</form>

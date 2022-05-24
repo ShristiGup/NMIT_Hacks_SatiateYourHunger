@@ -1,18 +1,21 @@
-{% extends 'main_app/index.html' %}
-{% load static %}
-{% block style %}
-<style>
-</style>
-{% endblock style %}
-{% block content %}
+{% extends 'main_app/index.html' %} {% load static %} {% block style %}
+<style></style>
+{% endblock style %} {% block content %}
 <h2 class="mt-4 text-center">Explore Recipes</h2>
 <form method="post">
-    {% csrf_token %}
-    <div class="form-group text-center">
-      <label for="exampleInputEmail1">Enter Recipe Name</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Eg: Banana Shake" name="recpe">
-    </div>
-   
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  {% csrf_token %}
+  <div class="form-group text-center">
+    <label for="exampleInputEmail1">Enter Recipe Name</label>
+    <input
+      type="email"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      placeholder="Eg: Banana Shake"
+      name="recpe"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock content %}

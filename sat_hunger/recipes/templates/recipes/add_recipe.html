@@ -44,7 +44,7 @@
     }
 
     body {
-      background-image: url("{% static 'imgs/waffle.jpg' %}");
+      background-image: url("{% static 'imgs/salad.jpg' %}");
       background-size: 100% 100%;
     }
 
@@ -271,11 +271,11 @@
           <div class="form-header-group  header-default">
             <div class="header-text httac htvam">
               <h1 id="header_20" class="form-header" data-component="header" style="font-family: 'Redressed', cursive; font-size: 60px;">
-                Find Your Recipe
+                Add Your Recipe
               </h1>
               <br>
               <div id="subHeader_20" class="form-subHeader" style=" font-family: 'Dancing Script', cursive; font-size: 25px;">
-                Fill this form to enter the enticing world of mouth-watering recipes...
+                Fill this form to enter the recipes of your choice!
               </div>
             </div>
           </div>
@@ -301,7 +301,7 @@
           <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
           style="padding-bottom: 10px;
           padding-top: 20px; font-size: 20px;">
-            List of Available Ingredients -
+            List of Available Ingredients (Please add comma separated values) -
             <span class="form-required">
               *
             </span>
@@ -315,6 +315,45 @@
 
           </div>
         </li>
+
+        <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
+            <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
+            style="padding-bottom: 10px;
+            padding-top: 20px; font-size: 20px;">
+              Add the steps required to cook the recipe -
+              <span class="form-required">
+                *
+              </span>
+            </label>
+            <div id="cid_19" class="form-input-wide jf-required">
+              <!-- <input type="text" id="input_19" name="age" data-type="input-textbox"
+                class="form-textbox validate[required] form-validation-error" size="20" value="" placeholder=" "
+                data-component="textbox" aria-labelledby="label_19" required=""> -->
+  
+              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 100px;width: 99%;color: white;" name="ingredients" required=""></textarea>
+  
+            </div>
+          </li>
+
+          <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
+            <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
+            style="padding-bottom: 10px;
+            padding-top: 20px; font-size: 20px;">
+              Time taken to cook it (in minutes) - 
+              <span class="form-required">
+                *
+              </span>
+            </label>
+            <div id="cid_19" class="form-input-wide jf-required">
+              <!-- <input type="text" id="input_19" name="age" data-type="input-textbox"
+                class="form-textbox validate[required] form-validation-error" size="20" value="" placeholder=" "
+                data-component="textbox" aria-labelledby="label_19" required=""> -->
+  
+              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="ingredients" required=""></textarea>
+  
+            </div>
+          </li>
+
         <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
           <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
           style="padding-bottom: 10px;
@@ -335,29 +374,7 @@
             </div>
           </div>
         </li>
-        <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
-          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19" style="padding-bottom: 10px;
-    padding-top: 20px; font-size: large;">
-            Your Hunger Level -
-            <span class="form-required">
-              *
-            </span>
-          </label>
-          <div class="row" required="">
-            <div class="col">
-              <input type="radio" id="starving" name="prep_time" value="Starving" required="">
-              <label for="starving" class="options" style="color: white;">Starving (Want Food Instantly?Better Go to Zomato)</label><br>
-            </div>
-            <div class="col" style="padding-top: 4px;">
-              <input type="radio" id="pretty_hungry" name="prep_time" value="Pretty hungry" required="">
-              <label for="pretty_hungry" class="options" style="color: white;">Pretty hungry (Stomach is Growling A Little)</label><br>
-            </div>
-            <div class="col" style="padding-top: 4px;">
-              <input type="radio" id="satisfied" name="prep_time" value="Satisfied" required="">
-              <label for="satisfied" class="options" style="color: white;">Satisfied (Neither Hungry Nor Full)</label><br>
-            </div>
-          </div>
-        </li>
+        
       </div>
         <li class="form-line mt-4" data-type="control_button" id="id_14">
           <div id="cid_14" class="form-input-wide">
