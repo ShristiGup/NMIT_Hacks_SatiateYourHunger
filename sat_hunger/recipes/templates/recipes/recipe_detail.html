@@ -124,6 +124,7 @@
       </div>
     </div>
 
+    {% if not cal %}
     <div class="col-md-12 my-4" style="text-align: center;">
       <div class="card mb-2 p-4">
         <h4> Reviews: </h4>
@@ -161,6 +162,8 @@
         
       </div>
     </div>
+    {% endif %}
+
   </form>
 </div>
 {% endblock content %}
