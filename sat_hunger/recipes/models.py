@@ -13,3 +13,12 @@ class RecentSearches(models.Model):
 
     class Meta: 
         verbose_name_plural = 'RecentSearches'
+
+class AddedRecipe(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    title = models.CharField(max_length=400)
+    ingredients = models.TextField()
+    steps = models.TextField()
+    readyInMinutes = models.PositiveIntegerField(default=10)
+    food_cat = models.CharField(max_length=10)
+    image = models.ImageField()

@@ -1,0 +1,17 @@
+.vscode/
+static/*
+.idea/
+media/*
+*.sqlite3
+main/static/*
+*.pyc
+.DS_Store
+#environment file
+chalkmate/.env
+#local env
+ckmt_bcd
+venv
+
+# logger 
+logg.txt
+__pycache__

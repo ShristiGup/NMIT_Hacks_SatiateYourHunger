@@ -91,20 +91,9 @@
     <div class="col-md-12 my-4" style="text-align: center;">
       <div class="card mb-2 p-4">
         <h4> Instructions: </h4>
+        {% if steps|length > 1 %}
         {% for i in steps %}
         <div class="form-row mt-4">
-          <!-- <div class="col-md-6 font-weight-bold"> -->
-          <!-- <p>Equipment:</p>
-        </div>
-        <div class="col-md-6">
-          <p>{{ j.equipment.name }}</p>
-        </div>
-        <div class="col-md-6 font-weight-bold">
-          <p>Ingredients:</p>
-        </div>
-        <div class="col-md-6">
-          <p>{{ j.ingredients.name }}</p>
-        </div> -->
           <div class="col-md-2 font-weight-bold">
             <p>Step: {{ forloop.counter }}</p>
           </div>
@@ -113,6 +102,11 @@
           </div>
         </div>
         {% endfor %}
+        {% else %}
+        <div class="col-md-10">
+          <p>{{ steps.0 }}</p>
+        </div>
+        {% endif %}
       </div>
     </div>
     <div class="col-md-12 my-4" style="text-align: center;">

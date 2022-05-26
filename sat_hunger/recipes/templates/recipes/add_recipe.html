@@ -260,7 +260,7 @@
       </ul>
     </div>
   </nav>
-  <form class="jotform-form" method="post" action="../show-recipes/" enctype="multipart/form-data">
+  <form class="jotform-form" method="post" action="../save-recipe/" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="hidden" name="formID" value="203233580605448">
     <input type="hidden" id="JWTContainer" value="">
@@ -311,7 +311,7 @@
               class="form-textbox validate[required] form-validation-error" size="20" value="" placeholder=" "
               data-component="textbox" aria-labelledby="label_19" required=""> -->
 
-            <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="ingredients" required=""></textarea>
+            <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="title" required=""></textarea>
 
           </div>
         </li>
@@ -350,7 +350,7 @@
                 class="form-textbox validate[required] form-validation-error" size="20" value="" placeholder=" "
                 data-component="textbox" aria-labelledby="label_19" required=""> -->
   
-              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 100px;width: 99%;color: white;" name="ingredients" required=""></textarea>
+              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 100px;width: 99%;color: white;" name="steps" required=""></textarea>
   
             </div>
           </li>
@@ -369,7 +369,7 @@
                 class="form-textbox validate[required] form-validation-error" size="20" value="" placeholder=" "
                 data-component="textbox" aria-labelledby="label_19" required=""> -->
   
-              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="ingredients" required=""></textarea>
+              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="readyInMinutes" required=""></textarea>
   
             </div>
           </li>

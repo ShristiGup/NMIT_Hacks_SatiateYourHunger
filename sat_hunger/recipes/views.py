@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .models import *
 import requests
 import json
+from .forms import *
+from django.core import serializers
 
 # Create your views here.
 
@@ -18,63 +20,70 @@ def addRecipe(request):
 
 def show_recipe(request):
     globals()['list3'] = []
-    globals()['food_cat'] = ""
     globals()['btn_color'] = ""
     globals()['ingre'] = request.POST.get('ingredients')
     globals()['food_cat'] = request.POST.get('food_cat')
     prep_time = request.POST.get('prep_time')
 
+    
     if prep_time == "Starving":
         return redirect("https://www.zomato.com/ncr")
-    
+
+    context = {}
     try:
-        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=9c71df05d86640df9865c5eb71775086"
+        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=c4a6aef8abe243de923c9cc7f7a769d2"
         response = requests.get(url1)
-        data = json.loads(response.content.decode('utf-8'))
-        print(data)
-        recipe_ids = []
-        for i in data:
-            recipe_ids.append(i['id'])
-        
-        recipe_info_list = []
-        url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=9c71df05d86640df9865c5eb71775086"
-        url2 = url2.replace(" ","")
-        resp = requests.get(url2)
-        recipe_info_list = json.loads(resp.content.decode('utf-8'))
-        
-        list1=[]
-        list2=[]
-        
-        for i in recipe_info_list:
-            if food_cat=="Veg" and str(i['vegetarian']) == "True":
-                list1.append(i)
-                globals()['btn_color'] = "success"
-            elif food_cat=="Non-Veg" and str(i['vegetarian']) == "False":
-                list1.append(i)
-                globals()['btn_color'] = "danger"
-        
+        if response.status_code>=200 and response.status_code<400:
+            data = json.loads(response.content.decode('utf-8'))
+            recipe_ids = []
+            for i in data:
+                recipe_ids.append(i['id'])
+            
+            recipe_info_list = []
+            url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=c4a6aef8abe243de923c9cc7f7a769d2"
+            url2 = url2.replace(" ","")
+            resp = requests.get(url2)
+            recipe_info_list = json.loads(resp.content.decode('utf-8'))
+            
+            list1=[]
+            list2=[]
+            
+            for i in recipe_info_list:
+                if food_cat=="Veg" and str(i['vegetarian']) == "True":
+                    list1.append(i)
+                    globals()['btn_color'] = "success"
+                elif food_cat=="Non-Veg" and str(i['vegetarian']) == "False":
+                    list1.append(i)
+                    globals()['btn_color'] = "danger"
+            
 
-        for i in list1:
-            if prep_time=="Pretty hungry" and int(i['readyInMinutes'])<=25:
-                list2.append(i)
-            elif prep_time=="Satisfied":
-                list2.append(i)
+            for i in list1:
+                if prep_time=="Pretty hungry" and int(i['readyInMinutes'])<=25:
+                    list2.append(i)
+                elif prep_time=="Satisfied":
+                    list2.append(i)
 
-        for i in list2:
-            for j in data:
-                if i['id'] == j['id']:
-                    i.update(j)
-                    globals()['list3'].append(i)
+            for i in list2:
+                for j in data:
+                    if i['id'] == j['id']:
+                        i.update(j)
+                        globals()['list3'].append(i)
 
-        if len(data)!=0 and len(list1)!=0 and len(list2)!=0:
-            context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
-            r_obj = RecentSearches(user=request.user,ingredients=str(ingre),food_cat=food_cat,hunger_level=prep_time)
-            r_obj.save()
-            # print(request.data)
-            return render(request,'recipes/show_recipes.html',context)
-        else:
-            return render(request,'recipes/show_recipes.html')
-    except:
+            
+
+            if len(data)!=0 and len(list1)!=0 and len(list2)!=0:
+                context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
+                r_obj = RecentSearches(user=request.user,ingredients=str(ingre),food_cat=food_cat,hunger_level=prep_time)
+                r_obj.save()
+        
+        user_recipes = []
+        user_added_recipe = AddedRecipe.objects.filter(ingredients__contains=ingre, food_cat=food_cat)
+        for recipe in user_added_recipe:
+            user_recipes.append(json.loads(serializers.serialize('json', [ recipe, ]))[0])
+        context['user_recipes'] = user_recipes
+        return render(request,'recipes/show_recipes.html', context)
+
+    except Exception as e:
         return render(request,'recipes/show_recipes.html')
 
 def recipe_detail(request,id):
@@ -121,8 +130,12 @@ def recipe_detail(request,id):
     url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=9c71df05d86640df9865c5eb71775086"
     response = requests.get(url3)
     d = json.loads(response.content.decode('utf-8'))
-    method1 = d[0]
-    steps = method1['steps']
+    if len(d):
+        method1 = d[0]
+        steps = method1['steps']
+    else:
+        method1 = {}
+        steps = []
     
     url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey=9c71df05d86640df9865c5eb71775086"
     response = requests.get(url4)
@@ -152,3 +165,14 @@ def exp_recipe(request):
     result1 = json.loads(res.content.decode('utf-8'))
 
     return render(request,'recipes/explore_recipe.html')
+
+def save_recipe(request):
+    if request.method == "POST":
+        form = AddRecipeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request,'recipes/recipie_added.html', context={"recipe_items": True})
+
+    else:
+        return render(request,'recipes/recipie_added.html', context={"recipe_items": False})
+

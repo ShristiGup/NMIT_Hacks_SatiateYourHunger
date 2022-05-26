@@ -5,8 +5,45 @@
 </style>
 {% endblock style %}
 {% block content %}
+{% if user_recipes %}
+<h2 class="mt-4 text-center">Satiate your hunger recipes</h2>
+<div class="container mt-4" style="max-width: 70%;">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for i in user_recipes %}
+    <div class="col mb-4" style="cursor: pointer;" onclick="location.href=`{% url 'recipe_detail' i.pk %}`">
+      <div class="card h-100 zoom text-center abc click special-card">
+        <!-- <img src="{{ i.image }}" class="card-img-top" alt="recipe_pic"> -->
+        <div class="card-body">
+          <h5 class="card-title">{{ i.fields.title }}</h5>
+          <form class="row">
+            <div class="col-md-6">
+              <p>Category:</p>
+            </div>
+            <div class="col-md-6">
+              <a class="btn btn-sm btn-{{ btn_color }} font-weight-bold ">{{ i.fields.food_cat }}</a>
+            </div>
+            <!-- <div class="col-md-6">
+              <p>Health Score:</p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text">{{ i.healthScore }}</p>
+            </div> -->
+            <div class="col-md-6">
+              <p>Ready in Minutes:</p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text">{{ i.fields.readyInMinutes }}</p>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
 {% if recipe_items %}
-<h2 class="mt-4 text-center">Matching Recipes as per your Preferences...</h2>
+<h2 class="mt-4 text-center">Recipes from other sources</h2>
 <div class="container mt-4" style="max-width: 70%;">
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for i in recipe_items %}
@@ -47,7 +84,8 @@
     {% endfor %}
   </div>
 </div>
-{% else %}
+{% endif %}
+{% if not user_recipes|length and not recipe_items|length %}
   <h2 class="mt-4 text-center">Oops...No Recipe to Display!!!(Please Change Your Preferences)</h2>
 {% endif %}
 {% endblock content %}
