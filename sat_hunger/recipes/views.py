@@ -33,7 +33,7 @@ def show_recipe(request):
 
     context = {}
     try:
-        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=c4a6aef8abe243de923c9cc7f7a769d2"
+        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=037a220044c34aec8a66c82728a3e071"
         response = requests.get(url1)
         if response.status_code>=200 and response.status_code<400:
             data = json.loads(response.content.decode('utf-8'))
@@ -42,7 +42,7 @@ def show_recipe(request):
                 recipe_ids.append(i['id'])
             
             recipe_info_list = []
-            url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=c4a6aef8abe243de923c9cc7f7a769d2"
+            url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=037a220044c34aec8a66c82728a3e071"
             url2 = url2.replace(" ","")
             resp = requests.get(url2)
             recipe_info_list = json.loads(resp.content.decode('utf-8'))
@@ -147,7 +147,7 @@ def recipe_detail(request,id):
     # for i in missed_ingre:
 
 
-    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=9c71df05d86640df9865c5eb71775086"
+    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=037a220044c34aec8a66c82728a3e071"
     response = requests.get(url3)
     d = json.loads(response.content.decode('utf-8'))
     if len(d):
@@ -157,7 +157,7 @@ def recipe_detail(request,id):
         method1 = {}
         steps = []
     
-    url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey=9c71df05d86640df9865c5eb71775086"
+    url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey=037a220044c34aec8a66c82728a3e071"
     response = requests.get(url4)
     videos = json.loads(response.content.decode('utf-8'))
     try:
