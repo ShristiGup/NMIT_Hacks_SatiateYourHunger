@@ -14,9 +14,12 @@ list3 = []
 food_cat = ""
 btn_color = ""
 ingre = ""
+user_recipes = []
+
 
 def addRecipe(request):
-    return render(request,'recipes/add_recipe.html')
+    form = AddedRecipe()
+    return render(request,'recipes/add_recipe.html', {'form': form})
 
 def show_recipe(request):
     globals()['list3'] = []
@@ -87,6 +90,15 @@ def show_recipe(request):
         return render(request,'recipes/show_recipes.html')
 
 def recipe_detail(request,id):
+    if request.GET.get('recipe_type') == '0':
+        obj = AddedRecipe.objects.get(id=id)
+        obj_json = json.loads(serializers.serialize('json', [ obj, ]))[0]
+        obj_json['readyInMinutes'] = obj_json['fields']['readyInMinutes']
+        obj_json['healthScore'] = obj_json['fields']['healthScore']
+        vd = [{'youTubeId': obj_json['fields']['youTubeId']}]
+        context={'recipe_item':obj_json,'food_cat':obj_json['fields']['food_cat'],'btn_color':'green', 'steps':[obj_json['fields']['steps']], 'vd': vd}
+        return render(request,'recipes/recipe_detail.html',context)
+
     recipe_item = ""
     cal = 0
     protein = 0
@@ -150,6 +162,9 @@ def recipe_detail(request,id):
         context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
 
     return render(request,'recipes/recipe_detail.html',context)
+
+
+
 
 def exp_recipe(request):
     ex_rec = request.POST.get('recpe')
