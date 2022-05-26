@@ -18,8 +18,7 @@ user_recipes = []
 
 
 def addRecipe(request):
-    form = AddedRecipe()
-    return render(request,'recipes/add_recipe.html', {'form': form})
+    return render(request,'recipes/add_recipe.html')
 
 def show_recipe(request):
     globals()['list3'] = []
@@ -80,7 +79,7 @@ def show_recipe(request):
                 r_obj.save()
         
         user_recipes = []
-        user_added_recipe = AddedRecipe.objects.filter(ingredients__contains=ingre, food_cat=food_cat)
+        user_added_recipe = AddedRecipe.objects.filter(ingredients__contains=ingre, food_cat=food_cat, approval='approved')
         for recipe in user_added_recipe:
             user_recipes.append(json.loads(serializers.serialize('json', [ recipe, ]))[0])
         context['user_recipes'] = user_recipes
@@ -192,10 +191,22 @@ def exp_recipe(request):
 
 def save_recipe(request):
     if request.method == "POST":
-        form = AddRecipeForm(request.POST)
+        data = {
+            'user': request.user,
+            'ingredients': request.POST.get('ingredients'),
+            'steps': request.POST.get('steps'), 
+            'readyInMinutes': request.POST.get('readyInMinutes'), 
+            'food_cat': request.POST.get('food_cat'), 
+            'healthScore': request.POST.get('healthScore'), 
+            'title': request.POST.get('title'), 
+            'youTubeId': request.POST.get('youTubeId')
+        }
+        form = AddRecipeForm(data)
         if form.is_valid():
             form.save()
             return render(request,'recipes/recipie_added.html', context={"recipe_items": True})
+        else:
+            return render(request,'recipes/recipie_added.html', context={"recipe_items": False})
 
     else:
         return render(request,'recipes/recipie_added.html', context={"recipe_items": False})

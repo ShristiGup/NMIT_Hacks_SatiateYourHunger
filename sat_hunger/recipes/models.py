@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import *
-
+from datetime import datetime
 # Create your models here.
 class RecentSearches(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
@@ -14,6 +14,12 @@ class RecentSearches(models.Model):
     class Meta: 
         verbose_name_plural = 'RecentSearches'
 
+
+APPROVAL_CHOICES = (
+    ('approved', 'approved'),
+    ('rejected', 'rejected'),
+    ('pending', 'pending'),
+)
 class AddedRecipe(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     title = models.CharField(max_length=400)
@@ -22,8 +28,11 @@ class AddedRecipe(models.Model):
     healthScore = models.PositiveIntegerField(default=10)
     readyInMinutes = models.PositiveIntegerField(default=10)
     food_cat = models.CharField(max_length=10)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     youTubeId = models.TextField(null=True, blank=True)
+    approval = models.CharField(max_length=20, choices=APPROVAL_CHOICES, default="pending")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
 
 class Review(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)

@@ -4,7 +4,7 @@ from django import forms
 class AddRecipeForm(forms.ModelForm):
     class Meta:
         model = AddedRecipe
-        fields = ['ingredients','steps', 'readyInMinutes', 'food_cat', 'healthScore', 'id']
+        fields = ['ingredients','steps', 'readyInMinutes', 'food_cat', 'healthScore', 'title', 'user', 'youTubeId']
 
 class ReviewForm(forms.ModelForm):
     class Meta:
