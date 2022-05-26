@@ -5,4 +5,5 @@ from .models import *
 
 admin.site.register(RecentSearches)
 admin.site.register(AddedRecipe)
+admin.site.register(Review)
 

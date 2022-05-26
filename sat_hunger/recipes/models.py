@@ -23,4 +23,9 @@ class AddedRecipe(models.Model):
     readyInMinutes = models.PositiveIntegerField(default=10)
     food_cat = models.CharField(max_length=10)
     image = models.ImageField(upload_to='images/')
-    youTubeId = models.TextField()
+    youTubeId = models.TextField(null=True, blank=True)
+
+class Review(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)
+    recipe = models.ForeignKey(AddedRecipe, on_delete=models.CASCADE, null=False)
+    text = models.TextField()

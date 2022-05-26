@@ -7,7 +7,8 @@
 {% block content %}
 <h3 class="mt-4 text-center">{{ recipe_item.title }}</h3>
 <div class="container mt-4">
-  <form class="row">
+  <form class="row jotform-form" method="post" action="../../add-review/" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="col-md-6">
       <div class="card" style="width: 35rem;">
         <div class="form-group">
@@ -33,9 +34,6 @@
               </div>
               <div class="col-md-6">
                 <p class="card-text">{{ recipe_item.readyInMinutes }}</p>
-              </div>
-              <div class="col-md-6 font-weight-bold">
-                <p>Liked By People:</p>
               </div>
             </div>
           </fieldset>
@@ -102,7 +100,7 @@
         </div>
         {% endfor %}
         {% else %}
-        <div class="col-md-10">
+        <div class="col-md-10" style="text-align: left;">
           <p>{{ steps.0 }}</p>
         </div>
         {% endif %}
@@ -111,14 +109,56 @@
     <div class="col-md-12 my-4" style="text-align: center;">
       <div class="card mb-2 p-4">
         <h4> Video Links: </h4>
-        {% if vd and vd|length %}
+        {% if vd %}
         {% for i in vd %}
+        {% if i.youTubeId|length %}
         <iframe width="420" height="315" src="https://www.youtube.com/embed/{{ i.youTubeId }}">
         </iframe>
+        {% else %}
+        <p class="mt-4 text-center">No Videos to Display for this Recipe!</p>
+        {% endif %}
         {% endfor %}
         {% else %}
-        <h2 class="mt-4 text-center">No Videos to Display for this Recipe!</h2>
+        <p class="mt-4 text-center">No Videos to Display for this Recipe!</p>
         {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-12 my-4" style="text-align: center;">
+      <div class="card mb-2 p-4">
+        <h4> Reviews: </h4>
+        {% if reviews|length > 0 %}
+        {% for review in reviews %}
+        <div class="mt-4" style="text-align: left;">
+          <div class="col-md-2 font-weight-bold">
+            <p class="mb-0">{{ review.user }}:</p>
+          </div>
+          <div class="col-md-2">
+            <p>{{ review.text }}</p>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h2 class="mt-4 text-center">No Reviews to Display for this Recipe!</h2>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-12 my-4" style="text-align: center">
+      <div class="card mb-2 p-4">
+        <h4>Add Review</h4>
+
+        <div class="form-group">
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="4"
+            name="text">
+          </textarea>
+          <br />
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+        <input type="hidden" name="recipe_id" value={{ recipe_item.pk }}>
+        
       </div>
     </div>
   </form>
