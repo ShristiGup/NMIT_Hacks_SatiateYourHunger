@@ -18,7 +18,8 @@ user_recipes = []
 
 
 def addRecipe(request):
-    return render(request,'recipes/add_recipe.html')
+    form = AddRecipeImageForm()
+    return render(request,'recipes/add_recipe.html', {"form": form})
 
 def show_recipe(request):
     globals()['list3'] = []
@@ -75,36 +76,53 @@ def show_recipe(request):
 
             if len(data)!=0 and len(list1)!=0 and len(list2)!=0:
                 context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
-                r_obj = RecentSearches(user=request.user,ingredients=str(ingre),food_cat=food_cat,hunger_level=prep_time)
-                r_obj.save()
         
         user_recipes = []
         user_added_recipe = AddedRecipe.objects.filter(ingredients__contains=ingre, food_cat=food_cat, approval='approved')
         for recipe in user_added_recipe:
-            user_recipes.append(json.loads(serializers.serialize('json', [ recipe, ]))[0])
+            user_recipes.append(recipe)
         context['user_recipes'] = user_recipes
+        r_obj = RecentSearches(user=request.user,ingredients=str(ingre),food_cat=food_cat,hunger_level=prep_time)
+        r_obj.save()
         return render(request,'recipes/show_recipes.html', context)
 
     except Exception as e:
         return render(request,'recipes/show_recipes.html')
 
 def recipe_detail(request,id):
+    if request.method == 'POST':
+        user = request.user
+        text = request.POST.get('text')
+        recipe = AddedRecipe.objects.get(id=request.POST.get('recipe_id'))
+        data = {
+            'user': user,
+            'text': text,
+            'recipe': recipe
+        }
+        form = ReviewForm(data)
+        if form.is_valid():
+            form.save()
+        return redirect(request.path_info + '?recipe_type=0')
+
+
+    
     if request.GET.get('recipe_type') == '0':
         obj = AddedRecipe.objects.get(id=id)
-        obj_json = json.loads(serializers.serialize('json', [ obj, ]))[0]
-        obj_json['readyInMinutes'] = obj_json['fields']['readyInMinutes']
-        obj_json['healthScore'] = obj_json['fields']['healthScore']
-        vd = [{'youTubeId': obj_json['fields']['youTubeId']}]
+        # obj_json = json.loads(serializers.serialize('json', [ obj, ]))[0]
+        # obj_json['readyInMinutes'] = obj_json['fields']['readyInMinutes']
+        # obj_json['healthScore'] = obj_json['fields']['healthScore']
+        # obj_json['image'] = obj_json['fields']['image']
+        # vd = [{'youTubeId': obj_json['fields']['youTubeId']}]
         reviews = []
         review_obj = Review.objects.filter(recipe=id)[::-1][:5]
         
         count = 0
         for review in review_obj:
-            obj = {}
-            obj['user'] = review.user
-            obj['text'] = review.text
-            reviews.append(obj)
-        context={'recipe_item':obj_json,'food_cat':obj_json['fields']['food_cat'],'btn_color':'green', 'steps':[obj_json['fields']['steps']], 'vd': vd, 'reviews': reviews}
+            robj = {}
+            robj['user'] = review.user
+            robj['text'] = review.text
+            reviews.append(robj)
+        context={'recipe_item':obj,'food_cat':obj.food_cat,'btn_color':'green', 'steps':[obj.steps], 'vd': [obj], 'reviews': reviews}
         return render(request,'recipes/recipe_detail.html',context)
 
     recipe_item = ""
@@ -191,38 +209,27 @@ def exp_recipe(request):
 
 def save_recipe(request):
     if request.method == "POST":
-        data = {
-            'user': request.user,
-            'ingredients': request.POST.get('ingredients'),
-            'steps': request.POST.get('steps'), 
-            'readyInMinutes': request.POST.get('readyInMinutes'), 
-            'food_cat': request.POST.get('food_cat'), 
-            'healthScore': request.POST.get('healthScore'), 
-            'title': request.POST.get('title'), 
-            'youTubeId': request.POST.get('youTubeId')
-        }
-        form = AddRecipeForm(data)
+        # data = {
+        #     'user': request.user,
+        #     'ingredients': request.POST.get('ingredients'),
+        #     'steps': request.POST.get('steps'), 
+        #     'readyInMinutes': request.POST.get('readyInMinutes'), 
+        #     'food_cat': request.POST.get('food_cat'), 
+        #     'healthScore': request.POST.get('healthScore'), 
+        #     'title': request.POST.get('title'), 
+        #     'youTubeId': request.POST.get('youTubeId')
+        # }
+        form = AddRecipeImageForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return render(request,'recipes/recipie_added.html', context={"recipe_items": True})
-        else:
-            return render(request,'recipes/recipie_added.html', context={"recipe_items": False})
+            r_form = AddRecipeForm(request.POST)
+            if r_form.is_valid():
+                add_recipe = r_form.save(commit=True)
+                add_recipe.user = request.user
+                add_recipe.image = form.cleaned_data.get("image")
+                add_recipe.save()
+                return render(request,'recipes/recipie_added.html', context={"recipe_items": True})
+            else:
+                return render(request,'recipes/recipie_added.html', context={"recipe_items": False})
 
     else:
         return render(request,'recipes/recipie_added.html', context={"recipe_items": False})
-
-
-def add_review(request):
-    user = request.user
-    text = request.POST.get('text')
-    recipe = AddedRecipe.objects.get(id=request.POST.get('recipe_id'))
-    data = {
-        'user': user,
-        'text': text,
-        'recipe': recipe
-    }
-    form = ReviewForm(data)
-    if form.is_valid():
-        form.save()
-        return render(request,'recipes/review_added.html', context={"review": True, "pk": request.POST.get('recipe_id')})
-    return render(request,'recipes/review_added.html', context={"review": False})

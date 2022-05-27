@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import *
 from datetime import datetime
+from PIL import Image
 # Create your models here.
 class RecentSearches(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)

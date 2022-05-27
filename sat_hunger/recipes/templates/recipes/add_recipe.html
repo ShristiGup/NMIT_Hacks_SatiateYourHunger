@@ -1,4 +1,6 @@
+{% extends "main_app/index.html" %}
 {% load static %}
+<!-- {% load crispy_forms_tags % } -->
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -231,38 +233,6 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-warning font-weight-bold" id="H">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">SatiateYourHunger</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'find_recipe' %}">Find Recipes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_recipe' %}">Add Recipes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'donate' %}">Donate</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-          </li>
-      </div>
-      <ul class="nav justify-content-end">
-        <li class="nav-item">
-          <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
   <form class="jotform-form" method="post" action="../save-recipe/" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -421,6 +391,17 @@
               <input type="radio" id="non-veg" name="food_cat" value="Non-Veg" required="">
               <label for="non-veg" class="options" style="color: white;">Non-Veg</label><br>
             </div>
+          </div>
+        </li>
+
+        <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
+          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
+          style="padding-bottom: 10px;
+          padding-top: 20px; font-size: 20px;">
+            Upload Image
+          </label>
+          <div id="cid_19" class="form-input-wide jf-required">
+            {{ form.as_p }}
           </div>
         </li>
         

@@ -12,15 +12,15 @@
     {% for i in user_recipes %}
     <div class="col mb-4" style="cursor: pointer;" onclick="location.href=`{% url 'recipe_detail' i.pk %}?recipe_type=0`">
       <div class="card h-100 zoom text-center abc click special-card">
-        <!-- <img src="{{ i.image }}" class="card-img-top" alt="recipe_pic"> -->
+        <img src="http://{{ request.get_host }}/media/{{ i.image }}" class="card-img-top" alt="recipe_pic">
         <div class="card-body">
-          <h5 class="card-title">{{ i.fields.title }}</h5>
+          <h5 class="card-title">{{ i.title }}</h5>
           <form class="row">
             <div class="col-md-6">
               <p>Category:</p>
             </div>
             <div class="col-md-6">
-              <a class="btn btn-sm btn-{{ btn_color }} font-weight-bold ">{{ i.fields.food_cat }}</a>
+              <a class="btn btn-sm btn-{{ btn_color }} font-weight-bold ">{{ i.food_cat }}</a>
             </div>
             <!-- <div class="col-md-6">
               <p>Health Score:</p>
@@ -32,7 +32,10 @@
               <p>Ready in Minutes:</p>
             </div>
             <div class="col-md-6">
-              <p class="card-text">{{ i.fields.readyInMinutes }}</p>
+              <p class="card-text">{{ i.readyInMinutes }}</p>
+            </div>
+            <div class="col-md-6">
+              <p>Health Score</p>
             </div>
             <div class="col-md-6">
               <p class="card-text">{{ i.healthScore }}</p>

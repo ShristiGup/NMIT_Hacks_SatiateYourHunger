@@ -7,7 +7,7 @@
 {% block content %}
 <h3 class="mt-4 text-center">{{ recipe_item.title }}</h3>
 <div class="container mt-4">
-  <form class="row jotform-form" method="post" action="../../add-review/" enctype="multipart/form-data">
+  <form class="row jotform-form" method="post" action="../../recipe-detail/{{ recipe_item.pk }}/" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="col-md-6">
       <div class="card" style="width: 35rem;">
@@ -83,7 +83,11 @@
     </div>
     <div class="col-md-6" style="text-align: center;">
       <h5> Food Image: </h5>
+      {% if cal %}
       <img src="{{ recipe_item.image }}" alt="recipe_pic" style="width: 90%;">
+      {% else %}
+      <img src="http://{{ request.get_host }}/media/{{ recipe_item.image }}" class="card-img-top" alt="recipe_pic">
+      {% endif %}
     </div>
     <div class="col-md-12 my-4" style="text-align: center;">
       <div class="card mb-2 p-4">

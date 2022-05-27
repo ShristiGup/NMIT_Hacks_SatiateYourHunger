@@ -1,0 +1,68 @@
+{% extends 'main_app/index.html' %}
+{% load static %}
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+{% block content %}
+{% if donations|length > 0 %}
+<h2 class="mt-4 text-center">Available food</h2>
+<div class="container mt-4" style="max-width: 70%;">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for i in donations %}
+    <div class="col mb-4">
+      <div class="card h-100 text-center">
+        <!-- <img src="{{ i.image }}" class="card-img-top" alt="recipe_pic"> -->
+        <div class="card-body">
+        <form class="jotform-form row" method="post" action="../request_food/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-md-6">
+                <p>Food donor name:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text font-weight-bold">{{ i.user.username }}</p>
+              </div>
+            <div class="col-md-6">
+              <p>Category:</p>
+            </div>
+            <div class="col-md-6">
+              <p class="font-weight-bold ">{{ i.food_cat }}</p>
+            </div>
+            <div class="col-md-6">
+                <p>Address:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.address }}</p>
+              </div>
+            <div class="col-md-6">
+                <p>Available for:</p>
+                </div>
+                <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.no_of_people }} people</p>
+            </div>
+            <div class="col-md-6">
+                <p>Description:</p>
+                </div>
+                <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.description }}</p>
+            </div>
+            <div class="col-md-6">
+                <p>Posted on:</p>
+                </div>
+                <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.timestamp.date }}</p>
+            </div>
+            <input type="hidden" name="food_id" value={{ i.pk }}>
+            <button type="submit" class="form-submit-button btn submit-button btn-success ml-4 mr-4 p-2 col mt-3" data-component="button"
+            data-content="">Select</button>
+        </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+  <h2 class="mt-4 text-center">Oops...No Donations till now</h2>
+{% endif %}
+{% endblock content %}
