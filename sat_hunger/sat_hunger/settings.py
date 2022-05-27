@@ -21,6 +21,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'crispy_forms',
+    'donate.apps.DonateConfig',
     'users.apps.UsersConfig',
     'recipes.apps.RecipesConfig',
     'main_app.apps.MainAppConfig',
