@@ -14,6 +14,14 @@ class FoodDonate(models.Model):
     no_of_people = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
+
+APPROVAL_CHOICES = (
+    ('approved', 'approved'),
+    ('rejected', 'rejected'),
+    ('pending', 'pending'),
+)
 class RequestFood(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     food = models.ForeignKey(FoodDonate,on_delete=models.CASCADE,null=True)
+    approval = models.CharField(max_length=20, choices=APPROVAL_CHOICES, default="pending")
+    no_of_people = models.IntegerField()

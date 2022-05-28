@@ -1,0 +1,59 @@
+{% extends 'main_app/index.html' %}
+{% load static %}
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+{% block content %}
+{% if your_donations|length > 0 %}
+<h2 class="mt-4 text-center">Your donations</h2>
+<div class="container mt-4" style="max-width: 70%;">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for i in your_donations %}
+    <div class="col mb-4" style="cursor: pointer;" onclick="location.href=`{% url 'donation_requests' i.pk %}`">
+      <div class="card h-100 zoom text-center abc click special-card">
+        <div class="card-body">
+          <form class="row">
+            {% csrf_token %}
+            <div class="col-md-6">
+              <p>Category:</p>
+            </div>
+            <div class="col-md-6">
+              <p class="font-weight-bold ">{{ i.food_cat }}</p>
+            </div>
+            <div class="col-md-6">
+                <p>Address:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.address }}</p>
+              </div>
+            <div class="col-md-6">
+                <p>Available for:</p>
+                </div>
+                <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.no_of_people }} people</p>
+            </div>
+            <div class="col-md-6">
+                <p>Description:</p>
+                </div>
+                <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.description }}</p>
+            </div>
+            <div class="col-md-6">
+                <p>Posted on:</p>
+                </div>
+                <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.timestamp.date }}</p>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+  <h2 class="mt-4 text-center">Start by adding a donation</h2>
+  <button class="btn submit-button btn-success ml-4 mr-4 p-2 col mt-3" onclick="location.href=`{% url 'your_donations' %}`"></div>
+{% endif %}
+{% endblock content %}

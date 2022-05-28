@@ -14,7 +14,7 @@
       <div class="card h-100 text-center">
         <!-- <img src="{{ i.image }}" class="card-img-top" alt="recipe_pic"> -->
         <div class="card-body">
-        <form class="jotform-form row" method="post" action="../request_food/" enctype="multipart/form-data">
+        <form class="jotform-form row" method="post" action="../request-food/" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="col-md-6">
                 <p>Food donor name:</p>
@@ -28,6 +28,12 @@
             <div class="col-md-6">
               <p class="font-weight-bold ">{{ i.food_cat }}</p>
             </div>
+            <div class="col-md-6">
+                <p>Phone:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="font-weight-bold ">{{ i.phone }}</p>
+              </div>
             <div class="col-md-6">
                 <p>Address:</p>
               </div>
@@ -53,6 +59,14 @@
                 <p class="font-weight-bold ">{{ i.timestamp.date }}</p>
             </div>
             <input type="hidden" name="food_id" value={{ i.pk }}>
+            <div class="col-md-6">
+                <p>Request for:</p>
+                </div>
+                <div class="col-md-6">
+                <input class="font-weight-bold " required placeholder="1" type="number" name="no_of_people" min="1" max={{ i.no_of_people }}>
+                <span class="font-weight-bold ">&nbsp; people</span>
+
+            </div>
             <button type="submit" class="form-submit-button btn submit-button btn-success ml-4 mr-4 p-2 col mt-3" data-component="button"
             data-content="">Select</button>
         </form>

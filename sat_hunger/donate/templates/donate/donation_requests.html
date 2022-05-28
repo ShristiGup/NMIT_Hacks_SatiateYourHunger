@@ -1,0 +1,47 @@
+{% extends "main_app/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container mb-4" style="max-width: 70%;">
+    {% if not donation_requests %}
+    <h2 class="text-center mb-4">No requests yet :/</h2>
+    {% else %}
+    <h2 class="text-center mb-4">Donation Requests</h2>
+    <table class="table table-bordered table-hover text-center">
+        <thead>
+          <tr class="bg-success text-white">
+            <th scope="col">S.No.</th>
+            <th scope="col">Id.</th>
+            <th scope="col">Name</th>
+            <th scope="col">People</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in donation_requests %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <th scope="row">{{ i.pk }}</th>
+            <td>{{ i.user.username }}</td>
+            <td>{{ i.no_of_people }}</td>
+            {% if i.approval == "pending" %}
+            <td class="p-0">
+                <button class="form-submit-button btn submit-button btn-success p-2" data-component="button"
+                data-content="" onclick="location.href=`{% url 'approve_request' i.pk %}?approval=approved&food_id={{ food_id }}`">Approve
+                </button>
+                <button class="form-submit-button btn submit-button btn-danger p-2" data-component="button"
+                data-content="" onclick="location.href=`{% url 'approve_request' i.pk %}?approval=rejected&food_id={{ food_id }}`">Reject
+                </button>
+            </td>   
+            {% else %}
+            <th>
+                {{ i.approval }}
+
+            </th>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+      {% endif %}
+{% endblock content%}

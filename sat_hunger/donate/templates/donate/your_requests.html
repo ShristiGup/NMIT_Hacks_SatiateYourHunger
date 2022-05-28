@@ -1,0 +1,35 @@
+{% extends "main_app/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container mb-4" style="max-width: 70%;">
+    {% if not food_requests %}
+    <h2 class="text-center mb-4">No requests yet :/</h2>
+    {% else %}
+    <h2 class="text-center mb-4">Your requests</h2>
+    <table class="table table-bordered table-hover text-center">
+        <thead>
+          <tr class="bg-success text-white">
+            <th scope="col">S.No.</th>
+            <th scope="col">Id.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">People</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in food_requests %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <th scope="row">{{ i.pk }}</th>
+            <td>{{ i.food.user.username }}</td>
+            <td>{{ i.no_of_people }}</td>
+            <td>{{ i.food.phone }}</td>
+            <th>{{ i.approval }}</th>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+      {% endif %}
+{% endblock content%}

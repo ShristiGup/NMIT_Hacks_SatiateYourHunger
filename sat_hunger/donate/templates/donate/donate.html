@@ -1,3 +1,4 @@
+{% extends 'main_app/index.html' %}
 {% load static %}
 {% block content %}
 <!DOCTYPE html>
@@ -233,41 +234,6 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-warning font-weight-bold" id="H">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">SatiateYourHunger</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'find_recipe' %}">Find Recipes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_recipe' %}">Add Recipes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'donate' %}">Donate</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'find_food' %}">Find Food</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-          </li>
-      </div>
-      <ul class="nav justify-content-end">
-        <li class="nav-item">
-          <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
   <form class="jotform-form" method="post" action="../recorded/" enctype="multipart/form-data">
     {% csrf_token %}
     <div role="main" class="form-all">
@@ -313,7 +279,7 @@
             </span>
           </label>
           <div id="cid_19" class="form-input-wide jf-required">
-
+            username
             <input type="text" value="{{ user.email }}" class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" readonly></textarea>
 
           </div>

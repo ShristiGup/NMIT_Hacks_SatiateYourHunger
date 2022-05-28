@@ -42,32 +42,34 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-warning font-weight-bold">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'home' %}">SatiateYourHunger</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'find_recipe' %}">Find Recipes</a>
+            <a class="nav-link active" href="{% url 'find_recipe' %}">Find Recipes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_recipe' %}">Add Recipes</a>
+            <a class="nav-link active" href="{% url 'add_recipe' %}">Add Recipes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'donate' %}">Donate</a>
+            <a class="nav-link active" href="{% url 'donate' %}">Donate</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'find_food' %}">Find Food</a>
+            <a class="nav-link active" href="{% url 'find_food' %}">Find Food</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            <a class="nav-link active" href="{% url 'profile' %}">Profile</a>
           </li>
       </div>
-      <ul class="nav justify-content-end">
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'your_requests' %}">Your Requests</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'your_donations' %}">Your Donations</a>
+        </li>
         <li class="nav-item">
           <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
         </li>
