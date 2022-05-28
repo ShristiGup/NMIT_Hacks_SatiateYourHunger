@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from django.utils import timezone
+from django.db.models import Q
 
 
 def donate(request):
@@ -19,7 +20,7 @@ def recorded(request):
 
 
 def find_food(request):
-    obj = FoodDonate.objects.all()
+    obj = FoodDonate.objects.filter(~Q(user=request.user)).order_by('-timestamp')
     return render(request,'donate/find_food.html', context={'donations': obj})
 
 
@@ -37,12 +38,12 @@ def request_food(request):
 
 
 def your_donations (request):
-    obj = FoodDonate.objects.filter(user=request.user)
+    obj = FoodDonate.objects.filter(user=request.user).order_by('-timestamp')
     return render(request,'donate/your_donations.html', {'your_donations': obj})
 
 
 def your_requests(request):
-    obj = RequestFood.objects.filter(user=request.user)
+    obj = RequestFood.objects.filter(user=request.user).order_by('-timestamp')
     return render(request,'donate/your_requests.html', {'food_requests': obj})
     
 

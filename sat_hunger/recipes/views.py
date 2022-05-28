@@ -78,9 +78,11 @@ def show_recipe(request):
                 context={'recipe_items':list3,'food_cat':food_cat,'btn_color':btn_color}
         
         user_recipes = []
-        user_added_recipe = AddedRecipe.objects.filter(ingredients__contains=ingre, food_cat=food_cat, approval='approved')
-        for recipe in user_added_recipe:
-            user_recipes.append(recipe)
+        for ing in ingre.split(','):
+            user_added_recipe = AddedRecipe.objects.filter(ingredients__contains=ing, food_cat=food_cat, approval='approved')
+            for recipe in user_added_recipe:
+                if set(ingre.split(',')) <= set(recipe.ingredients.split(',')) and recipe not in user_recipes:
+                    user_recipes.append(recipe)
         context['user_recipes'] = user_recipes
         r_obj = RecentSearches(user=request.user,ingredients=str(ingre),food_cat=food_cat,hunger_level=prep_time)
         r_obj.save()
