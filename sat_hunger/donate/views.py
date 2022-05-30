@@ -47,8 +47,6 @@ def your_requests(request):
     return render(request,'donate/your_requests.html', {'food_requests': obj})
     
 
-
-
 def donation_requests(request, id):
     food = FoodDonate.objects.get(pk=id)
     request_food = RequestFood.objects.filter(food=food)

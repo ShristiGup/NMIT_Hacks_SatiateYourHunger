@@ -6,16 +6,15 @@ from .forms import *
 from django.core import serializers
 
 # Create your views here.
-
-def recipe(request):
-    return render(request,'recipes/find_recipe.html')
-
 list3 = []
 food_cat = ""
 btn_color = ""
 ingre = ""
 user_recipes = []
+key = "4bd30dcb0062410aa39143d2cdc4bfd9"
 
+def recipe(request):
+    return render(request,'recipes/find_recipe.html')
 
 def addRecipe(request):
     form = AddRecipeImageForm()
@@ -29,12 +28,12 @@ def show_recipe(request):
     prep_time = request.POST.get('prep_time')
 
     
-    if prep_time == "Starving":
-        return redirect("https://www.zomato.com/ncr")
+    # if prep_time == "Starving":
+    #     return redirect("https://www.zomato.com/ncr")
 
     context = {}
     try:
-        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey=037a220044c34aec8a66c82728a3e071"
+        url1 = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="+str(ingre)+"&number=15&ranking=1&apiKey="+key
         response = requests.get(url1)
         if response.status_code>=200 and response.status_code<400:
             data = json.loads(response.content.decode('utf-8'))
@@ -43,7 +42,7 @@ def show_recipe(request):
                 recipe_ids.append(i['id'])
             
             recipe_info_list = []
-            url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey=037a220044c34aec8a66c82728a3e071"
+            url2 = "https://api.spoonacular.com/recipes/informationBulk?ids="+str(recipe_ids)[1:-1]+"&includeNutrition=true&apiKey="+key
             url2 = url2.replace(" ","")
             resp = requests.get(url2)
             recipe_info_list = json.loads(resp.content.decode('utf-8'))
@@ -61,7 +60,9 @@ def show_recipe(request):
             
 
             for i in list1:
-                if prep_time=="Pretty hungry" and int(i['readyInMinutes'])<=25:
+                if prep_time=="Starving" and int(i['readyInMinutes'])<=25:
+                    list2.append(i)
+                elif prep_time=="Pretty hungry" and int(i['readyInMinutes'])<=35:
                     list2.append(i)
                 elif prep_time=="Satisfied":
                     list2.append(i)
@@ -71,7 +72,6 @@ def show_recipe(request):
                     if i['id'] == j['id']:
                         i.update(j)
                         globals()['list3'].append(i)
-
             
 
             if len(data)!=0 and len(list1)!=0 and len(list2)!=0:
@@ -79,7 +79,9 @@ def show_recipe(request):
         
         user_recipes = []
         for ing in ingre.split(','):
+            ing = ing.lower()
             user_added_recipe = AddedRecipe.objects.filter(ingredients__contains=ing, food_cat=food_cat, approval='approved')
+            print(user_added_recipe)
             for recipe in user_added_recipe:
                 if set(ingre.split(',')) <= set(recipe.ingredients.split(',')) and recipe not in user_recipes:
                     user_recipes.append(recipe)
@@ -95,11 +97,13 @@ def recipe_detail(request,id):
     if request.method == 'POST':
         user = request.user
         text = request.POST.get('text')
+        rating = int(request.POST.get('rating'))
         recipe = AddedRecipe.objects.get(id=request.POST.get('recipe_id'))
         data = {
             'user': user,
             'text': text,
-            'recipe': recipe
+            'recipe': recipe,
+            'rating': rating
         }
         form = ReviewForm(data)
         if form.is_valid():
@@ -110,11 +114,6 @@ def recipe_detail(request,id):
     
     if request.GET.get('recipe_type') == '0':
         obj = AddedRecipe.objects.get(id=id)
-        # obj_json = json.loads(serializers.serialize('json', [ obj, ]))[0]
-        # obj_json['readyInMinutes'] = obj_json['fields']['readyInMinutes']
-        # obj_json['healthScore'] = obj_json['fields']['healthScore']
-        # obj_json['image'] = obj_json['fields']['image']
-        # vd = [{'youTubeId': obj_json['fields']['youTubeId']}]
         reviews = []
         review_obj = Review.objects.filter(recipe=id)[::-1][:5]
         
@@ -123,6 +122,7 @@ def recipe_detail(request,id):
             robj = {}
             robj['user'] = review.user
             robj['text'] = review.text
+            robj['rating'] = review.rating
             reviews.append(robj)
         context={'recipe_item':obj,'food_cat':obj.food_cat,'btn_color':'green', 'steps':[obj.steps], 'vd': [obj], 'reviews': reviews}
         return render(request,'recipes/recipe_detail.html',context)
@@ -158,16 +158,14 @@ def recipe_detail(request,id):
         elif i['name']=="Cholesterol":
             cholestrol = round(int(i['amount']))
             unit_ch = i['unit']
-    # missed_ingre_count = int(recipe_item['missedIngredientCount'])
-    # used_ingre_count = int(recipe_item['usedIngredientCount'])
+    
     missed_ingre = recipe_item['missedIngredients']
-    used_ingre = recipe_item['usedIngredients']
-    unused_ingre = recipe_item['unusedIngredients']
-    # m_ing = 
-    # for i in missed_ingre:
+    m_ing = []
+    for i in missed_ingre:
+        m_ing.append(i['name'])
+    other_ingre = str(",".join(m_ing)).title()
 
-
-    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey=037a220044c34aec8a66c82728a3e071"
+    url3 = "https://api.spoonacular.com/recipes/"+str(id)+"/analyzedInstructions?apiKey="+key
     response = requests.get(url3)
     d = json.loads(response.content.decode('utf-8'))
     if len(d):
@@ -177,17 +175,17 @@ def recipe_detail(request,id):
         method1 = {}
         steps = []
     
-    url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey=037a220044c34aec8a66c82728a3e071"
+    url4 = "https://api.spoonacular.com/food/videos/search?query="+str(recipe_item['title'])+"&number=3&apiKey="+key
     response = requests.get(url4)
     videos = json.loads(response.content.decode('utf-8'))
     try:
         vd = videos['videos']
         if len(vd)!=0:
-            context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps,'vd':vd}
+            context={'recipe_item':recipe_item,'other_ingre':other_ingre,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps,'vd':vd}
         else:
-            context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
+            context={'recipe_item':recipe_item,'other_ingre':other_ingre,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
     except:
-        context={'recipe_item':recipe_item,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
+        context={'recipe_item':recipe_item,'other_ingre':other_ingre,'food_cat':food_cat,'btn_color':btn_color,'fats':fats,'cal':cal,'protein':protein,'carbs':carbs,'cholestrol':cholestrol,'unit_c':unit_c,'unit_f':unit_f,'unit_p':unit_p,'unit_ch':unit_ch,'unit_ca':unit_ca,'steps':steps}
 
     return render(request,'recipes/recipe_detail.html',context)
 
@@ -196,14 +194,14 @@ def recipe_detail(request,id):
 
 def exp_recipe(request):
     ex_rec = request.POST.get('recpe')
-    url = "https://api.spoonacular.com/recipes/complexSearch?query="+str(ex_rec)+"&number=1&apiKey=9c71df05d86640df9865c5eb71775086"
+    url = "https://api.spoonacular.com/recipes/complexSearch?query="+str(ex_rec)+"&number=1&apiKey="+key
     res = requests.get(url)
     result = json.loads(res.content.decode('utf-8'))
 
     a = result['results']
     b = a[0]
 
-    url = "https://api.spoonacular.com/recipes/"+str(b['id'])+"/ingredientWidget?apiKey=9c71df05d86640df9865c5eb71775086"
+    url = "https://api.spoonacular.com/recipes/"+str(b['id'])+"/ingredientWidget?apiKey="+key
     res1 = requests.get(url)
     result1 = json.loads(res.content.decode('utf-8'))
 
@@ -211,16 +209,6 @@ def exp_recipe(request):
 
 def save_recipe(request):
     if request.method == "POST":
-        # data = {
-        #     'user': request.user,
-        #     'ingredients': request.POST.get('ingredients'),
-        #     'steps': request.POST.get('steps'), 
-        #     'readyInMinutes': request.POST.get('readyInMinutes'), 
-        #     'food_cat': request.POST.get('food_cat'), 
-        #     'healthScore': request.POST.get('healthScore'), 
-        #     'title': request.POST.get('title'), 
-        #     'youTubeId': request.POST.get('youTubeId')
-        # }
         form = AddRecipeImageForm(request.POST, request.FILES)
         if form.is_valid():
             r_form = AddRecipeForm(request.POST)

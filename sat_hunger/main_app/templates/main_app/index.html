@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="{% static 'imgs/foodlogo.png' %}">
   <title>SatiateYourHunger</title>
   {% block style %}
   <style>
@@ -115,20 +117,20 @@
     <div class="col-lg-4">
       <img class="rounded-circle" src="{% static 'imgs/p5.jpg' %}" alt="Generic placeholder image" width="300"
         height="300">
-      <h2 style="margin-top: 30px; text-align: center;">Explore Recipe</h2>
+      <h2 style="margin-top: 30px; text-align: center;">Add Recipe</h2>
       <p style="    font-size: 18px; text-align: center;"> Cooking is about creating something delicious for someone
         else. — Ayumi </p>
-      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
-          style="margin: 0 auto; display: block;">Explore Recipe Here</a></p>
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="{% url 'add_recipe' %}" role="button"
+          style="margin: 0 auto; display: block;">Add Recipe Here</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
       <img class="rounded-circle" src="{% static 'imgs/p2.jpg' %}" alt="Generic placeholder image" width="300"
         height="300">
-      <h2 style="margin-top: 30px; text-align: center;">Get Food Facts!</h2>
-      <p style="    font-size: 18px; text-align: center;">I cook with wine; sometimes I even add it to the food. — W.C.
+      <h2 style="margin-top: 30px; text-align: center;">Donate Food</h2>
+      <p style="    font-size: 18px; text-align: center;">Look what we can do together. — W.C.
         Fields</p>
-      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="#" role="button"
-          style="margin: 0 auto; display: block;">Get Food Facts Here</a></p>
+      <p style="margin-top: 20px;"><a class="btn btn-secondary" href="{% url 'donate' %}" role="button"
+          style="margin: 0 auto; display: block;">Donate Food</a></p>
     </div><!-- /.col-lg-4 -->
   </div>
   <div class="card m-2 " >
@@ -142,8 +144,7 @@
     </div>
     <div class="col-md-6">
     <div class="card h-100" style="background-color: #fffeb4;">
-      
-        <h2 style="    margin-top: 20px;">Useful Food Trivia</h2>
+        <h2 style="margin-top: 20px;">Useful Food Trivia</h2>
         <p style="padding: 30px;">{{ food_trivia.text }}</p>
       </div>
   </div>
@@ -153,8 +154,8 @@
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
       <div class="row">
         <div class="col-12 col-md">
-          <img class="mb-2" src="{% static 'imgs/p3.jpg' %}" alt="" width="24" height="24">
-          <small class="d-block mb-3 text-muted">© 2017-2018</small>
+          <img class="mb-2" src="{% static 'imgs/foodlogo.png' %}" alt="" width="200" height="200">
+          <small class="d-block mb-3 text-muted"><b>© 2021-2022</b></small>
         </div>
         <div class="col-6 col-md">
           <h5>Features</h5>

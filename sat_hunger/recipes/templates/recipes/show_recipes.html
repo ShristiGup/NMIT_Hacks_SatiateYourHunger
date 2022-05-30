@@ -6,13 +6,15 @@
 {% endblock style %}
 {% block content %}
 {% if user_recipes %}
-<h2 class="mt-4 text-center">Satiate your hunger recipes</h2>
+<h2 class="mt-4 text-center">SatiateYourHunger Recipes</h2>
 <div class="container mt-4" style="max-width: 70%;">
-<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for i in user_recipes %}
-    <div class="col mb-4" style="cursor: pointer;" onclick="location.href=`{% url 'recipe_detail' i.pk %}?recipe_type=0`">
+    <div class="col mb-4" style="cursor: pointer;"
+      onclick="location.href=`{% url 'recipe_detail' i.pk %}?recipe_type=0`">
       <div class="card h-100 zoom text-center abc click special-card">
-        <img src="http://{{ request.get_host }}/media/{{ i.image }}" class="card-img-top" alt="recipe_pic">
+        <img src="http://{{ request.get_host }}/media/{{ i.image }}" class="card-img-top" alt="recipe_pic"
+          style="height:280px; width: 100%;">
         <div class="card-body">
           <h5 class="card-title">{{ i.title }}</h5>
           <form class="row">
@@ -40,7 +42,7 @@
             <div class="col-md-6">
               <p class="card-text">{{ i.healthScore }}</p>
             </div>
-            </form>
+          </form>
         </div>
       </div>
     </div>
@@ -49,11 +51,12 @@
 </div>
 {% endif %}
 {% if recipe_items %}
-<h2 class="mt-4 text-center">Recipes from other sources</h2>
+<h2 class="mt-4 text-center">Recipes from Other Sources</h2>
 <div class="container mt-4" style="max-width: 70%;">
-<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for i in recipe_items %}
-    <div class="col mb-4" style="cursor: pointer;" onclick="location.href=`{% url 'recipe_detail' i.id %}?recipe_type=1`">
+    <div class="col mb-4" style="cursor: pointer;"
+      onclick="location.href=`{% url 'recipe_detail' i.id %}?recipe_type=1`">
       <div class="card h-100 zoom text-center abc click special-card">
         <img src="{{ i.image }}" class="card-img-top" alt="recipe_pic">
         <div class="card-body">
@@ -83,7 +86,7 @@
             <div class="col-md-6">
               <p class="card-text">{{ i.aggregateLikes }}</p>
             </div>
-            </form>
+          </form>
         </div>
       </div>
     </div>
@@ -92,6 +95,6 @@
 </div>
 {% endif %}
 {% if not user_recipes|length and not recipe_items|length %}
-  <h2 class="mt-4 text-center">Oops...No Recipe to Display!!!(Please Change Your Preferences)</h2>
+<h2 class="mt-4 text-center">Oops...No Recipe to Display!!!(Please Change Your Preferences)</h2>
 {% endif %}
 {% endblock content %}

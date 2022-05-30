@@ -6,11 +6,12 @@ import json
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
-    url = "https://api.spoonacular.com/food/jokes/random?apiKey=c4a6aef8abe243de923c9cc7f7a769d2"
+    key = "2cfad58e575a4eeb969152c42a36b4b7"
+    url = "https://api.spoonacular.com/food/jokes/random?apiKey="+key
     res = requests.get(url)
     food_joke = json.loads(res.content.decode('utf-8'))
 
-    url1 = "https://api.spoonacular.com/food/trivia/random?apiKey=c4a6aef8abe243de923c9cc7f7a769d2"
+    url1 = "https://api.spoonacular.com/food/trivia/random?apiKey="+key
     res1 = requests.get(url1)
     trivia = json.loads(res1.content.decode('utf-8'))
 

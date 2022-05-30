@@ -38,4 +38,5 @@ class AddedRecipe(models.Model):
 class Review(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)
     recipe = models.ForeignKey(AddedRecipe, on_delete=models.CASCADE, null=False)
+    rating = models.PositiveIntegerField(null=True)
     text = models.TextField()

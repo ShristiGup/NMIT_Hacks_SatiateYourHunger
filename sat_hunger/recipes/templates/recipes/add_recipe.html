@@ -282,7 +282,7 @@
               class="form-textbox validate[required] form-validation-error" size="20" value="" placeholder=" "
               data-component="textbox" aria-labelledby="label_19" required=""> -->
 
-            <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="title" required=""></textarea>
+            <input type="text" class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="title" required="">
 
           </div>
         </li>
@@ -340,7 +340,7 @@
                 class="form-textbox validate[required] form-validation-error" size="20" value="" placeholder=" "
                 data-component="textbox" aria-labelledby="label_19" required=""> -->
   
-              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="readyInMinutes" required=""></textarea>
+              <input type="number" class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="readyInMinutes" required="">
   
             </div>
           </li>
@@ -355,7 +355,7 @@
               </span>
             </label>
             <div id="cid_19" class="form-input-wide jf-required">
-              <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="healthScore" required=""></textarea>
+              <input type="number" max="20" class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="healthScore" required="">
             </div>
           </li>
 
@@ -367,7 +367,7 @@
             Youtube Video Id
           </label>
           <div id="cid_19" class="form-input-wide jf-required">
-            <textarea class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="youTubeId"></textarea>
+            <input type="text" class="form-textbox validate[required] form-validation-error" id="input_19" style="height: 38px;width: 99%;color: white;" name="youTubeId">
           </div>
         </li>
         
@@ -397,10 +397,10 @@
         <li class="form-line jf-required form-line-error" data-type="control_textbox" id="id_19">
           <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"
           style="padding-bottom: 10px;
-          padding-top: 20px; font-size: 20px;">
+          padding-top: 20px; font-size: 20px;color: white;">
             Upload Image
           </label>
-          <div id="cid_19" class="form-input-wide jf-required">
+          <div id="cid_19" class="form-input-wide jf-required" style="color: white;">
             {{ form.as_p }}
           </div>
         </li>

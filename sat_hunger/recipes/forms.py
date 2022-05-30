@@ -13,4 +13,4 @@ class AddRecipeImageForm(forms.Form):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ["user", "recipe", "text"]
+        fields = ["user", "recipe", "text","rating"]

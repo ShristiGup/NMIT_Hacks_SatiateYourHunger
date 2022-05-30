@@ -7,9 +7,11 @@
 {% block content %}
 <h3 class="mt-4 text-center">{{ recipe_item.title }}</h3>
 <div class="container mt-4">
-  <form class="row jotform-form" method="post" action="../../recipe-detail/{{ recipe_item.pk }}/" enctype="multipart/form-data">
+  <form class="row jotform-form" method="post" action="../../recipe-detail/{{ recipe_item.pk }}/"
+    enctype="multipart/form-data">
     {% csrf_token %}
     <div class="col-md-6">
+      <br>
       <div class="card" style="width: 35rem;">
         <div class="form-group">
           <fieldset class="border p-2 mx-4 my-2">
@@ -35,6 +37,22 @@
               <div class="col-md-6">
                 <p class="card-text">{{ recipe_item.readyInMinutes }}</p>
               </div>
+              {% if recipe_item.ingredients%}
+              <div class="col-md-6 font-weight-bold">
+                <p>Ingredients List:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ recipe_item.ingredients }}</p>
+              </div>
+              {% endif %}
+              {% if other_ingre %}
+              <div class="col-md-6 font-weight-bold">
+                <p>Other Ingredients Required:</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">{{ other_ingre }}</p>
+              </div>
+              {% endif %}
             </div>
           </fieldset>
         </div>
@@ -86,7 +104,8 @@
       {% if cal %}
       <img src="{{ recipe_item.image }}" alt="recipe_pic" style="width: 90%;">
       {% else %}
-      <img src="http://{{ request.get_host }}/media/{{ recipe_item.image }}" class="card-img-top" alt="recipe_pic">
+      <img src="http://{{ request.get_host }}/media/{{ recipe_item.image }}" class="card-img-top" alt="recipe_pic"
+        style="height:250px; width: 300px;">
       {% endif %}
     </div>
     <div class="col-md-12 my-4" style="text-align: center;">
@@ -135,11 +154,11 @@
         {% if reviews|length > 0 %}
         {% for review in reviews %}
         <div class="mt-4" style="text-align: left;">
-          <div class="col-md-2 font-weight-bold">
-            <p class="mb-0">{{ review.user }}:</p>
-          </div>
-          <div class="col-md-2">
-            <p>{{ review.text }}</p>
+          <div class="row">
+            <p class="mb-0 col-md-6">Review by <b>{{ review.user }}</b>: &nbsp; {{ review.text }}
+            </p>
+            <span class="col-md-6" style="text-align: right;display: inline-block;">Star Rating: {{ review.rating }} <i
+                class="fa fa-star" style="color: orange;font-size:17px;"></i></span>
           </div>
         </div>
         {% endfor %}
@@ -152,18 +171,47 @@
       <div class="card mb-2 p-4">
         <h4>Add Review</h4>
 
-        <div class="form-group">
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="4"
-            name="text">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19" style="padding-bottom: 10px;
+            padding-top: 20px; font-size: large;">
+            Review Description -
+          </label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" name="text">
           </textarea>
-          <br />
-          <button type="submit" class="btn btn-success">Submit</button>
+
+
+          <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19" style="padding-bottom: 10px;
+            padding-top: 20px; font-size: large;">
+            Your Rating -
+          </label>
+          <div class="row">
+            <div class="col">
+              <input type="radio" id="one" name="rating" value="1" required="">
+              <label for="one" class="options">1 Star</label><br>
+            </div>
+            <div class="col" style="padding-top: 4px;">
+              <input type="radio" id="two" name="rating" value="2" required="">
+              <label for="two" class="options">2 Star</label><br>
+            </div>
+            <div class="col" style="padding-top: 4px;">
+              <input type="radio" id="three" name="rating" value="3" required="">
+              <label for="three" class="options">3 Star</label><br>
+            </div>
+            <div class="col" style="padding-top: 4px;">
+              <input type="radio" id="four" name="rating" value="4" required="">
+              <label for="four" class="options">4 Star</label><br>
+            </div>
+            <div class="col" style="padding-top: 4px;">
+              <input type="radio" id="five" name="rating" value="5" required="">
+              <label for="five" class="options">5 Star</label><br>
+            </div>
+          </div>
+          <div class="mt-4" style="text-align: center;">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
         </div>
         <input type="hidden" name="recipe_id" value={{ recipe_item.pk }}>
-        
+
       </div>
     </div>
     {% endif %}
